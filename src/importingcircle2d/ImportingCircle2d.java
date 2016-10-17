@@ -13,12 +13,14 @@ public class ImportingCircle2d extends JFrame {
 
     public int height;
     public int width;
-    public static ImportingCircle2d instance;
+    private static ImportingCircle2d instance;
+    private JPanel currentPage;
+    private ImagePage imagePage;
+    
     
     public static void main(String[] args) {
-        getInstance();  
+        getInstance().initialize();  
     }
-    
     public static ImportingCircle2d getInstance(){
         if(instance==null)
             instance=new ImportingCircle2d();
@@ -31,22 +33,29 @@ public class ImportingCircle2d extends JFrame {
         setSize(width, height);
         setUndecorated(true);
         setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        initialize();
         
     }
     
     public void initialize(){
         
         
-        ImagePage imagePage = new ImagePage();
-        
+        imagePage = new ImagePage();
         add(imagePage);
         
      
-        imagePage.setVisible(true);
+        showPage(imagePage);
         
         
+    }
+    
+    public void showPage(JPanel page){
+        
+        if(currentPage!=null)
+            currentPage.setVisible(false);
+        page.setVisible(true);
+        currentPage=page;
     }
     
 }
