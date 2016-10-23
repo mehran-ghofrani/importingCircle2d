@@ -73,6 +73,9 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
             y[i]=points[i].y;
         }
         
+        
+        setVisible(false);
+        
     }
     
     
@@ -127,7 +130,7 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
             g.drawLine((getWidth()/10), y*(getWidth()/100), getWidth()/10, (y+1)*(getWidth()/100));
             g.drawLine(getWidth()/10*9, y*(getWidth()/100), getWidth()/10*9, (y+1)*(getWidth()/100));
         }
-        g.fillRect(getWidth()/2-(int)(openedAmount*(getWidth()/2)), 0, (int)(openedAmount*getWidth()), getHeight());
+        g.fillRect((int)(getWidth()/2-openedAmount*(getWidth()/2)), 0, (int)(openedAmount*getWidth()), getHeight());
         g.setColor(new Color(255, 255, 255, (int)(arrowTranslation*255)));
         
         g.fillPolygon(leftX,y,7);
@@ -143,19 +146,22 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
         new Thread(new Runnable() {
             @Override
             public void run() {
-                double arrowTranslationSpeed=0.001;
+                double speed=0.0005;
+                double arrowTranslationSpeed=0.001*speed;
                 while(DoorPage.getInstance().visibile){
-                    try {
-                        Thread.sleep(1);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(DoorPage.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+//                    try {
+//                        Thread.sleep(1);
+//                    } catch (InterruptedException ex) {
+//                        Logger.getLogger(DoorPage.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//assign 1 to speed if uncommented
                     if(openedAmount>0.001&&!mouseClicked)
-                        openedAmount-=openedAmount/500;
+                        openedAmount-=openedAmount/500*speed;
+                    
                     arrowTranslation+=arrowTranslationSpeed;
                     if(arrowTranslation<0||1<arrowTranslation)
                         arrowTranslationSpeed*=-1;
-                    DoorPage.getInstance().repaint();
+                    
                     for(int i=0;i<=6;i++){
                         leftX[i]=points[i].x+
                                 (int)((arrowTranslation-openedAmount*5)*
@@ -163,6 +169,9 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
                                 DoorPage.getInstance().getWidth());
                         rightX[i]=parent.getWidth()-leftX[i];
                         y[i]=points[i].y;
+                        
+                        
+                        DoorPage.getInstance().repaint();
                     }
                     
        
