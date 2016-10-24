@@ -8,18 +8,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import pages.DoorPage;
 import pages.ImagePage;
 
 
-public class ImportingCircle2d extends JFrame implements MouseListener{
+public class ImportingCircle2d extends JFrame{
 
     public int height;
     public int width;
     private static ImportingCircle2d instance;
     private JPanel currentPage;
-    
-    
     
     public static void main(String[] args) {
         getInstance().initialize();  
@@ -31,31 +30,23 @@ public class ImportingCircle2d extends JFrame implements MouseListener{
         return instance;
     }
     private ImportingCircle2d(){
+        
         getContentPane().setBackground(Color.blue);
-        addMouseListener(this);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         width = (int)screenSize.getWidth();
         height = (int)screenSize.getHeight();
         setSize(width, height);
         setUndecorated(true);
-
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   
     }
-    
     public void initialize(){
         
-        
-        
-        
-        add(ImagePage.getInstance());
         add(DoorPage.getInstance());
+        add(ImagePage.getInstance());
         ImagePage.getInstance().initialize();
         showPage(ImagePage.getInstance());
-        
     }
-    
     public void showPage(JPanel page){
         
         if(currentPage!=null)
@@ -63,26 +54,4 @@ public class ImportingCircle2d extends JFrame implements MouseListener{
         page.setVisible(true);
         currentPage=page;
     }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        System.exit(0);    
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }
-    
 }
