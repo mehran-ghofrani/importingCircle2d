@@ -11,8 +11,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.EventDispatcher;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 
 public class DoorPage extends JPanel implements MouseMotionListener,MouseListener {
@@ -36,21 +38,17 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
             instance=new DoorPage();
         return instance;
     }
-    
     private DoorPage(){
         parent=importingcircle2d.ImportingCircle2d.getInstance();
         setBackground(Color.BLACK);
         setSize(parent.getWidth(), parent.getHeight());
         addMouseListener(this);
-        addMouseMotionListener(this);
-        
-        
+        addMouseMotionListener(this);   
         int arrowX=getWidth()/20;
-        int arrowY=getHeight()/10;
-        
+        int arrowY=getHeight()/10;   
         mouseClicked=false;
         openedAmount=0.001;
-        points=new Point[7];
+        points=new Point[7];   
         
         points[0]=new Point(1*arrowX, 5*arrowY);
         
@@ -66,38 +64,28 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
         leftX=new int[7];
         rightX=new int[7];
         y=new int[7];
-        
         for(int i=0;i<=6;i++){
             leftX[i]=points[i].x;
             rightX[i]=parent.getWidth()-leftX[i];
             y[i]=points[i].y;
         }
-        
-        
         setVisible(false);
-        
     }
-    
-    
-
     @Override
     public void mouseDragged(MouseEvent e) {
-        openedAmount+=(double)(e.getX()-lastMouseX)/getWidth()*(dragStartedFromLeft?-1:1);
+        openedAmount+=(double)(e.getX()-lastMouseX)/getWidth()*2*(dragStartedFromLeft?-1:1);
         if(openedAmount<.001)
             openedAmount=.001;
         lastMouseX=e.getX();
-        
     }
-
     @Override
     public void mouseMoved(MouseEvent e) {
+        
     }
-
     @Override
     public void mouseClicked(MouseEvent e) {
         
     }
-
     @Override
     public void mousePressed(MouseEvent e) {
         lastMouseX=e.getX();
@@ -105,22 +93,45 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
         mouseClicked=true;
         dragStartedFromLeft=e.getX()<getWidth()/2;
     }
-
     @Override
     public void mouseReleased(MouseEvent e) {
         mouseClicked=false;
-    }
+        if(openedAmount>4/5d)
+            new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(openedAmount<1)
+                    openedAmount+=0.0000000001;
+                
+                importingcircle2d.ImportingCircle2d.getInstance().showPage(ImagePage.getInstance());
+                
+                ImagePage.getInstance().revalidate();
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                       ImagePage.getInstance().reinitialize();
+                    }
+                });
+                
+                
 
+                                
+                                
+
+                
+                
+                
+            }
+        }).start();
+                        
+
+
+    }
     @Override
     public void mouseEntered(MouseEvent e) {
     }
-
     @Override
     public void mouseExited(MouseEvent e) {
     }
-    
-    
-    
     
     @Override
     public void paintComponent(Graphics g){
@@ -132,13 +143,9 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
         }
         g.fillRect((int)(getWidth()/2-openedAmount*(getWidth()/2)), 0, (int)(openedAmount*getWidth()), getHeight());
         g.setColor(new Color(255, 255, 255, (int)(arrowTranslation*255)));
-        
         g.fillPolygon(leftX,y,7);
         g.fillPolygon(rightX,y,7);
-        
-        
     }
-    
     @Override
     public void setVisible(boolean visibile){
         super.setVisible(visibile);
@@ -157,11 +164,9 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
 //assign 1 to speed if uncommented
                     if(openedAmount>0.001&&!mouseClicked)
                         openedAmount-=openedAmount/500*speed;
-                    
                     arrowTranslation+=arrowTranslationSpeed;
                     if(arrowTranslation<0||1<arrowTranslation)
                         arrowTranslationSpeed*=-1;
-                    
                     for(int i=0;i<=6;i++){
                         leftX[i]=points[i].x+
                                 (int)((arrowTranslation-openedAmount*5)*
@@ -169,16 +174,10 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
                                 DoorPage.getInstance().getWidth());
                         rightX[i]=parent.getWidth()-leftX[i];
                         y[i]=points[i].y;
-                        
-                        
                         DoorPage.getInstance().repaint();
                     }
-                    
-       
                 }
             }
         }).start();
     }
-    
-    
 }

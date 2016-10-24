@@ -45,7 +45,7 @@ public class ImportingCircle2d extends JFrame{
         add(DoorPage.getInstance());
         add(ImagePage.getInstance());
         ImagePage.getInstance().initialize();
-        showPage(ImagePage.getInstance());
+        showPage(DoorPage.getInstance());
     }
     public void showPage(JPanel page){
         
