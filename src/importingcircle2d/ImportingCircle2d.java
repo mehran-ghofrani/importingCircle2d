@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import pages.DoorPage;
@@ -19,6 +20,7 @@ public class ImportingCircle2d extends JFrame{
     public int width;
     private static ImportingCircle2d instance;
     private JPanel currentPage;
+    JLayeredPane layer;
     
     public static void main(String[] args) {
         getInstance().initialize();  
@@ -31,21 +33,31 @@ public class ImportingCircle2d extends JFrame{
     }
     private ImportingCircle2d(){
         
-        getContentPane().setBackground(Color.blue);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         width = (int)screenSize.getWidth();
         height = (int)screenSize.getHeight();
         setSize(width, height);
+        setLocationRelativeTo(null);
         setUndecorated(true);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   
+        layer=new JLayeredPane();
+        layer.setLayout(null);
+        layer.setSize(getSize());
+        layer.setVisible(true);
+        add(layer);
+        
+
     }
     public void initialize(){
         
-        add(DoorPage.getInstance());
-        add(ImagePage.getInstance());
+        
+        layer.add(DoorPage.getInstance(),Integer.valueOf(0));
+        layer.add(ImagePage.getInstance(),Integer.valueOf(0));
         ImagePage.getInstance().initialize();
         showPage(DoorPage.getInstance());
+        
+        
     }
     public void showPage(JPanel page){
         
