@@ -39,6 +39,7 @@ public class ImagePage extends JPanel{
     }
     ImagePage(){
         
+        setLayout(null);
         parent=importingcircle2d.ImportingCircle2d.getInstance();
         currentPic=0;        
         imgs=new Vector();
@@ -104,7 +105,7 @@ class ImageItem extends JPanel implements MouseListener{
     
     public ImageItem(String imgAddress) {
 
-        setBackground(Color.yellow);
+        setBackground(Color.white);
         addMouseListener(this);
         try {
             image = ImageIO.read(new File(imgAddress));
@@ -116,7 +117,23 @@ class ImageItem extends JPanel implements MouseListener{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(image,(getParent().getWidth() - image.getWidth()) / 2,(getParent().getHeight() - image.getHeight()) / 2,null);
+        double imageAspect=(double)image.getWidth()/image.getHeight();
+        double screenAspect=(double)importingcircle2d.ImportingCircle2d.getInstance().width/importingcircle2d.ImportingCircle2d.getInstance().height;
+        boolean screenIsWider=imageAspect<screenAspect;
+        double scale;
+        if(screenIsWider){
+            scale=(double)image.getHeight()/importingcircle2d.ImportingCircle2d.getInstance().height;           
+        }
+        else{
+            scale=(double)image.getWidth()/importingcircle2d.ImportingCircle2d.getInstance().width;  
+        }
+        int newWidth=(int)(image.getWidth()/scale);
+        int newHeight=(int)(image.getHeight()/scale);
+        
+            
+               
+//        g.drawImage(image,0,0,getParent().getWidth() ,getParent().getHeight(),null);
+        g.drawImage(image,(getParent().getWidth() - newWidth) / 2,(getParent().getHeight() - newHeight)/2 , newWidth, newHeight,null);
     }
     @Override
     public void mouseClicked(MouseEvent e) {
