@@ -34,9 +34,14 @@ public class Button extends Polygon {
     public void draw(Graphics g){
         super.draw(g);
         g.setColor(textColor);
-        g.setFont(new Font("Bodoni MT", 2, 100));
+        int fontSize=100;
+        g.setFont(new Font("Bodoni MT", 2, fontSize));
         Rectangle textBounds=getStringBounds((Graphics2D)g, text, x, y);
-        g.drawString(text, x-textBounds.width/2, y+textBounds.height/2);
+        fontSize*=textBounds.width/(2*radius-(textBounds.height/(2*Math.sqrt(Math.pow(radius, 2)-Math.pow(radius/2, 2))))*radius);
+        g.setFont(new Font("Bodoni MT", 2, fontSize));
+        Rectangle newTextBounds=getStringBounds((Graphics2D)g, text, x, y);
+        
+        g.drawString(text, x-newTextBounds.width/2, y+newTextBounds.height/2);
         
     }
     private Rectangle getStringBounds(Graphics2D g2, String str,
