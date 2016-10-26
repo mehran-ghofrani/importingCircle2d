@@ -15,6 +15,7 @@ import javafx.event.EventDispatcher;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import utils.Polygon;
 
 
 public class DoorPage extends JPanel implements MouseMotionListener,MouseListener {
@@ -104,22 +105,6 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
                     openedAmount+=0.0000000001;
                 
                 importingcircle2d.ImportingCircle2d.getInstance().showPage(ImagePage.getInstance());
-                
-                ImagePage.getInstance().revalidate();
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                       ImagePage.getInstance().reinitialize();
-                    }
-                });
-                
-                
-
-                                
-                                
-
-                
-                
-                
             }
         }).start();
                         
