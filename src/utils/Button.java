@@ -36,12 +36,19 @@ public class Button extends Polygon {
         g.setColor(textColor);
         int fontSize=100;
         g.setFont(new Font("Bodoni MT", 2, fontSize));
-        Rectangle textBounds=getStringBounds((Graphics2D)g, text, x, y);
-        fontSize*=textBounds.width/(2*radius-(textBounds.height/(2*Math.sqrt(Math.pow(radius, 2)-Math.pow(radius/2, 2))))*radius);
+        Rectangle textBounds=getStringBounds((Graphics2D)g, text, x, y);       
+        fontSize*=(2*radius)/(textBounds.width+textBounds.height/1.5);
         g.setFont(new Font("Bodoni MT", 2, fontSize));
-        Rectangle newTextBounds=getStringBounds((Graphics2D)g, text, x, y);
+        textBounds=getStringBounds((Graphics2D)g, text, x, y);
+        if(textBounds.height>Math.sqrt(3*Math.pow(radius, 2))){
+            fontSize*=Math.sqrt(3*Math.pow(radius, 2))/textBounds.height;
+            g.setFont(new Font("Bodoni MT", 2, fontSize));
+            textBounds=getStringBounds((Graphics2D)g, text, x, y);
+
+        }
         
-        g.drawString(text, x-newTextBounds.width/2, y+newTextBounds.height/2);
+        g.drawString(text, x-textBounds.width/2, y+textBounds.height/2);
+        g.drawRect(x-textBounds.width/2, y-textBounds.height/2, textBounds.width, textBounds.height);
         
     }
     private Rectangle getStringBounds(Graphics2D g2, String str,
