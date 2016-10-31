@@ -65,9 +65,9 @@ public class Button extends Polygon implements MouseListener,MouseMotionListener
         }
         
         g.drawString(text, (int)(x-textBounds.getX()-textBounds.getWidth()/2), (int)(y-textBounds.getY()-textBounds.getHeight()/2));
-        g.drawLine(x, y, x-(int)(textBounds.getWidth()/2), y+(int)(textBounds.getHeight()/2));
         g.translate((int)(x-textBounds.getX()-textBounds.getWidth()/2), (int)(y-textBounds.getY()-textBounds.getHeight()/2));
         ((Graphics2D)g).draw(textBounds);
+        g.translate((int)-(x-textBounds.getX()-textBounds.getWidth()/2), (int)-(y-textBounds.getY()-textBounds.getHeight()/2));
         
         
     }
