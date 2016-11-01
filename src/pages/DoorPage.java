@@ -15,7 +15,10 @@ import javafx.event.EventDispatcher;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import utils.Button;
+import utils.ButtonGroupPanel;
 import utils.Polygon;
+import utils.actionListener;
 
 
 public class DoorPage extends JPanel implements MouseMotionListener,MouseListener {
@@ -34,12 +37,16 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
     private boolean mouseClicked;
     private boolean dragStartedFromLeft;
     
+    
+    
     public static DoorPage getInstance(){
         if(instance==null)
             instance=new DoorPage();
         return instance;
     }
     private DoorPage(){
+        setBackground(Color.BLUE);
+        setLayout(null);
         parent=importingcircle2d.ImportingCircle2d.getInstance();
         setBackground(Color.BLACK);
         setSize(parent.getWidth(), parent.getHeight());
@@ -71,6 +78,14 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
             y[i]=points[i].y;
         }
         setVisible(false);
+        
+        
+        
+
+
+        
+                
+            
     }
     @Override
     public void mouseDragged(MouseEvent e) {
@@ -85,7 +100,7 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
     }
     @Override
     public void mouseClicked(MouseEvent e) {
-        
+        System.out.println("pages.DoorPage.mouseClicked()");
     }
     @Override
     public void mousePressed(MouseEvent e) {
@@ -130,6 +145,24 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
         g.setColor(new Color(255, 255, 255, (int)(arrowTranslation*255)));
         g.fillPolygon(leftX,y,7);
         g.fillPolygon(rightX,y,7);
+        
+        
+//        Button b=new Button("ی", getWidth()/2, getHeight()/2, 100,new actionListener() {
+//            @Override
+//            public void actionPerformed() {
+//                System.out.println(".actionPerformed()");
+//                        
+//                        
+//                        
+//
+//            }
+//        });
+//        b.draw(g);
+        
+        
+        
+        
+        
     }
     @Override
     public void setVisible(boolean visibile){
