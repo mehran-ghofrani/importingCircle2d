@@ -6,6 +6,7 @@
 package utils;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.MouseEvent;
@@ -17,7 +18,7 @@ import javax.swing.JPanel;
  *
  * @author Mactabi
  */
-public class ButtonGroupPanel extends JPanel implements MouseMotionListener, MouseListener{
+public class ButtonGroupPanel extends JPanel implements MouseListener{
     
     private boolean moving;
     private Button[] buttons=new Button[6];
@@ -27,14 +28,15 @@ public class ButtonGroupPanel extends JPanel implements MouseMotionListener, Mou
 
     public ButtonGroupPanel(int width) {
         closed=true;
-        setBackground(Color.red);
+        setOpaque(false);
+//        setBackground(Color.red);
         buttonsRR=width/6;
 //        setSize(width, (int)(3*Math.sqrt(3)*buttonsRR));
         setSize(width, (int)(6*buttonsRR));
         addMouseListener(this);
-        addMouseMotionListener(this);
         System.out.println(getWidth()+" "+getHeight());
         init();
+        
         
         
         
@@ -108,7 +110,16 @@ public class ButtonGroupPanel extends JPanel implements MouseMotionListener, Mou
             buttons[i].setFontSize(smallestFontSize);
         }
         centerBtn.setFontSize(smallestFontSize);
-        repaint();
+        
+        for(int i=0;i<6;i++){
+            buttons[i].setColor(new Color(255, 255, 255,100));
+        }
+        centerBtn.setColor(new Color(255, 255, 255,100));
+        
+        for(int i=0;i<6;i++){
+            buttons[i].setVisible(false);
+        }
+        
     }
     public void close(){
         moving=true;
@@ -176,13 +187,7 @@ public class ButtonGroupPanel extends JPanel implements MouseMotionListener, Mou
         
     }
 
-    @Override
-    public void mouseDragged(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-    }
+    
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -206,6 +211,7 @@ public class ButtonGroupPanel extends JPanel implements MouseMotionListener, Mou
 
     @Override
     public void mouseExited(MouseEvent e) {
+        
     }
     
     
