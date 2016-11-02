@@ -22,7 +22,7 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
     public int width;
     private static ImportingCircle2d instance;
     private JPanel currentPage;
-    JLayeredPane layer;
+    public JLayeredPane layer;
     
     public static void main(String[] args) {
         importingcircle2d.ImportingCircle2d.getInstance().initialize();
@@ -72,13 +72,15 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
         
         
 
+
     }
     public void initialize(){
         
         
-        layer.add(NavPage.getInstance(),Integer.valueOf(0));
+        layer.add(DoorPage.getInstance(),Integer.valueOf(0));
+        layer.add(NavPage.getInstance(),Integer.valueOf(1));
         
-        showPage(NavPage.getInstance());
+        showPage(DoorPage.getInstance());
         
         
         
