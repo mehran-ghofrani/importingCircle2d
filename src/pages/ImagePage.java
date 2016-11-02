@@ -38,7 +38,6 @@ public class ImagePage extends JPanel{
         return instance;    
     }
     ImagePage(){
-        
         setLayout(null);
         parent=importingcircle2d.ImportingCircle2d.getInstance();
         currentPic=0;        
@@ -49,9 +48,15 @@ public class ImagePage extends JPanel{
     }
     public void initialize(){
         
+        setVisible(false);
         imgs.add(new ImageItem("res//img//1.jpg"));
-        imgs.add(new ImageItem("res//img//2.jpg"));
+        imgs.add(new ImageItem("res//img//2.png"));
         imgs.add(new ImageItem("res//img//3.jpg"));
+        imgs.add(new ImageItem("res//img//4.jpg"));
+        imgs.add(new ImageItem("res//img//5.jpg"));
+        imgs.add(new ImageItem("res//img//6.jpg"));
+        imgs.add(new ImageItem("res//img//7.jpg"));
+        imgs.add(new ImageItem("res//img//8.jpg"));
         int i=0;
         for(ImageItem imgItm:imgs){
             add(imgs.get(i));
@@ -60,6 +65,7 @@ public class ImagePage extends JPanel{
             imgs.get(i).setVisible(true);
             i++;
         }
+        revalidate();
     }
     public void reinitialize(){
         int i=0;
@@ -75,7 +81,7 @@ public class ImagePage extends JPanel{
         for(int i=0;i<=imgs.size()-1;i++){
                 currentLocation[i]=width*(i-currentPic);
         }
-        final int stepsNum=right?100:-100;
+        final int stepsNum=right?500:-500;
         final double stepsLenght=(double)width/stepsNum;
         if (((1<=currentPic&&right)||(!right&&currentPic<=imgs.size()-2))&&!moving)
             new Thread(new Runnable() {
@@ -83,7 +89,7 @@ public class ImagePage extends JPanel{
                     ImagePage.moving=true;
                     for(int j=1;j<=Math.abs(stepsNum);j++){
                         try {
-                            Thread.sleep(10);
+                            Thread.sleep(1);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -104,15 +110,15 @@ class ImageItem extends JPanel implements MouseListener{
     private int lastY;
     
     public ImageItem(String imgAddress) {
-
         setBackground(Color.white);
         addMouseListener(this);
         try {
             image = ImageIO.read(new File(imgAddress));
-            } 
+        } 
         catch (IOException ex) {
-            System.out.println("addressError"); 
-            }        
+            ex.printStackTrace();
+            System.out.println(imgAddress);
+        }        
     }
     @Override
     protected void paintComponent(Graphics g) {
@@ -132,7 +138,7 @@ class ImageItem extends JPanel implements MouseListener{
         
             
                
-//        g.drawImage(image,0,0,getParent().getWidth() ,getParent().getHeight(),null);
+        g.drawImage(image,0,0,getParent().getWidth() ,getParent().getHeight(),null);
         g.drawImage(image,(getParent().getWidth() - newWidth) / 2,(getParent().getHeight() - newHeight)/2 , newWidth, newHeight,null);
     }
     @Override
@@ -147,7 +153,7 @@ class ImageItem extends JPanel implements MouseListener{
     public void mouseReleased(MouseEvent e) {
         int verticalMove=Math.abs(e.getX()-lastX);
         int hortizalMove=Math.abs(e.getY()-lastY);
-        if(verticalMove>hortizalMove&&verticalMove>getWidth()/3)
+        if(verticalMove>hortizalMove&&verticalMove>getWidth()/5)
             ((ImagePage)getParent()).moveImages(e.getX()>lastX);
     }
     @Override
