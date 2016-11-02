@@ -11,6 +11,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +23,7 @@ import java.awt.font.GlyphVector;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
 import javax.swing.Icon;
+import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
@@ -31,49 +33,94 @@ import javax.swing.SwingUtilities;
  */
 public class Button extends Polygon implements MouseListener,MouseMotionListener {
     
+    private Image[] imgs;
+    private int currentImg;
     private String text;
     private Color textColor;
     Rectangle2D textBounds; 
     double fontSize;
     private actionListener listener;
+    public boolean visible;
+    String fontName;
     
-    public Button(String text,int x,int y,double rad) {
+    
+    public Button(String text,int x,int y,double rad,actionListener listener) {
         super(6,x,y,rad);
+        imgs=new Image[2];
+        this.listener=listener;
         this.text=text;
         textColor=Color.black;
-    }
-    public void draw(Graphics g){
-        super.draw(g);
-        g.setColor(textColor);
-        double fontSize=100;
-        g.setFont(new Font("B Jadid Bold", 2, (int)fontSize));
-        textBounds=getStringBounds((Graphics2D)g, text, x, y);       
-        fontSize*=(2*radius)/(textBounds.getWidth()+textBounds.getHeight()/1.5);
-//        fontSize*=(
-//                (2*radius)/(
-//                ((double)textBounds.height/textBounds.width)-Math.tan((2/3d)*Math.PI)
-//                )
-//                )/(double)textBounds.width;
+        visible=true;
+        fontName="B Moj";
         
-        g.setFont(new Font("B Jadid Bold", 2, (int)fontSize));
+        
+        Graphics g=importingcircle2d.ImportingCircle2d.getInstance().getGraphics();
+        fontSize=100;
+        g.setFont(new Font(fontName, 0, (int)fontSize));
+        textBounds=getStringBounds((Graphics2D)g, text, x, y);       
+
+        fontSize*=(2*radius)/(textBounds.getWidth()+textBounds.getHeight()/1.5);
+
+//        double neededWidth=
+//                (2d*radius)/
+//                (
+//                (textBounds.getHeight()/textBounds.getWidth())-Math.tan((2/3d)*Math.PI)
+//                );     
+//        fontSize*=neededWidth/textBounds.getWidth();
+
+//        g.translate((int)(x-textBounds.getX()-textBounds.getWidth()/2), (int)(y-textBounds.getY()-textBounds.getHeight()/2));
+//        g.drawRect((int)(neededWidth/2), (int)(textBounds.getHeight()*(neededWidth/textBounds.getWidth())/2d), (int)neededWidth, (int)(textBounds.getHeight()*(neededWidth/textBounds.getWidth())));
+//        g.translate((int)-(x-textBounds.getX()-textBounds.getWidth()/2), (int)-(y-textBounds.getY()-textBounds.getHeight()/2));
+
+        g.setFont(new Font(fontName, 0, (int)fontSize));
+
         textBounds=getStringBounds((Graphics2D)g, text, x, y);
         if(textBounds.getHeight()>Math.sqrt(3*Math.pow(radius, 2))){
             fontSize*=Math.sqrt(3*Math.pow(radius, 2))/textBounds.getHeight();
-            g.setFont(new Font("B Jadid Bold", 2, (int)fontSize));
+            g.setFont(new Font(fontName, 0, (int)fontSize));
             textBounds=getStringBounds((Graphics2D)g, text, x, y);
 
         }
         
-        g.drawString(text, (int)(x-textBounds.getX()-textBounds.getWidth()/2), (int)(y-textBounds.getY()-textBounds.getHeight()/2));
-        g.translate((int)(x-textBounds.getX()-textBounds.getWidth()/2), (int)(y-textBounds.getY()-textBounds.getHeight()/2));
-        ((Graphics2D)g).draw(textBounds);
-        g.translate((int)-(x-textBounds.getX()-textBounds.getWidth()/2), (int)-(y-textBounds.getY()-textBounds.getHeight()/2));
-        
         
     }
-    private Rectangle2D getStringBounds(Graphics2D g2, String str,
-                                      float x, float y)
-    {
+    public void setImg1(Image img,int id){
+        imgs[id]=img;
+    } 
+    public void setCurrentImg(int id){
+        currentImg=id;
+    }
+    public void setVisible(boolean visible){
+        this.visible=visible;
+    }
+    public void setFontSize(int size){
+        fontSize=size;
+        if(text=="+")
+            fontSize=4*size;
+        Graphics g=importingcircle2d.ImportingCircle2d.getInstance().getGraphics();
+        g.setFont(new Font(fontName, 0, (int)fontSize));
+        textBounds=getStringBounds((Graphics2D)g, text, x, y);       
+
+        
+    }
+    public void draw(Graphics g){
+        if(visible){
+            super.draw(g);
+            g.setFont(new Font(fontName, 0, (int)fontSize));
+            g.setColor(textColor);
+            
+            if(imgs[currentImg]!=null)
+                g.drawImage(imgs[currentImg], (int)(x-Math.sqrt(radius*radius/8)/2), (int)(y-Math.sqrt(radius*radius/8)/2), (int)(x+Math.sqrt(radius*radius/8)/2), (int)(y+Math.sqrt(radius*radius/8)/2), null);
+            
+            g.drawString(text, (int)(x-textBounds.getX()-textBounds.getWidth()/2), (int)(y-textBounds.getY()-textBounds.getHeight()/2));
+
+//            g.translate((int)(x-textBounds.getX()-textBounds.getWidth()/2), (int)(y-textBounds.getY()-textBounds.getHeight()/2));
+//            ((Graphics2D)g).draw(textBounds);
+//            g.translate((int)-(x-textBounds.getX()-textBounds.getWidth()/2), (int)-(y-textBounds.getY()-textBounds.getHeight()/2));
+        }
+        
+    }
+    private Rectangle2D getStringBounds(Graphics2D g2, String str, float x, float y) {
 //        FontRenderContext frc = g2.getFontRenderContext();
 //        GlyphVector gv = g2.getFont().createGlyphVector(frc, str);
 //        return gv.getPixelBounds(null, x, y);
@@ -115,10 +162,18 @@ public class Button extends Polygon implements MouseListener,MouseMotionListener
         Rectangle2D bounds = gv.getVisualBounds();
         return bounds;
     }
+    public void setText(String text){
+        this.text=text;
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(Math.sqrt(
+                Math.pow(e.getX()-x, 2)
+                +
+                Math.pow(e.getY()-y, 2)    
+        )<radius)
+            listener.actionPerformed(this);
     }
 
     @Override
