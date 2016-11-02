@@ -7,6 +7,7 @@ package utils;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -36,61 +37,82 @@ public class ButtonGroupPanel extends JPanel implements MouseMotionListener, Mou
         init();
         
         
+        
+//        String fonts[] = 
+//      GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+//
+//    for ( int i = 0; i < fonts.length; i++ )
+//    {
+//      System.out.println(fonts[i]);
+//    }
+        
        
     }
     private void init(){
         centerBtn=new Button("+",getWidth()/2,getHeight()/2,buttonsRR,new actionListener() {
             @Override
-            public void actionPerformed() {
+            public void actionPerformed(Button btn) {
                 if(closed)
                     open();
                 else
                     close();
                 
-                System.out.println("moves again");
+                
                 
             
             }
         });
         buttons[0]=new Button("سلفی",getWidth()/2,getHeight()/2,buttonsRR,new actionListener() {
             @Override
-            public void actionPerformed() {
+            public void actionPerformed(Button btn) {
                 
             }
         });
         buttons[1]=new Button("از من بپرس",getWidth()/2,getHeight()/2,buttonsRR,new actionListener() {
             @Override
-            public void actionPerformed() {
+            public void actionPerformed(Button btn) {
                 
             }
         });
         buttons[2]=new Button("عکس",getWidth()/2,getHeight()/2,buttonsRR,new actionListener() {
             @Override
-            public void actionPerformed() {
+            public void actionPerformed(Button btn) {
                 
             }
         });
         buttons[3]=new Button("دوربین هوشمند",getWidth()/2,getHeight()/2,buttonsRR,new actionListener() {
             @Override
-            public void actionPerformed() {
+            public void actionPerformed(Button btn) {
                 
             }
         });
         buttons[4]=new Button("فیلم",getWidth()/2,getHeight()/2,buttonsRR,new actionListener() {
             @Override
-            public void actionPerformed() {
+            public void actionPerformed(Button btn) {
                 
             }
         });
         buttons[5]=new Button("کاتالوگ",getWidth()/2,getHeight()/2,buttonsRR,new actionListener() {
             @Override
-            public void actionPerformed() {
+            public void actionPerformed(Button btn) {
                 
             }
         });
+        
+        int smallestFontSize=(int)buttons[0].fontSize;
+        for(int i=0;i<6;i++){
+            if(smallestFontSize>(int)buttons[i].fontSize)
+                smallestFontSize=(int)buttons[i].fontSize;
+        }
+        for(int i=0;i<6;i++){
+            buttons[i].setFontSize(smallestFontSize);
+        }
+        centerBtn.setFontSize(smallestFontSize);
+        repaint();
     }
     public void close(){
         moving=true;
+        centerBtn.setText("+");
         for(int i=0;i<=5;i++){
             buttons[i].move(getWidth()/2,getHeight()/2);
         }
@@ -114,6 +136,7 @@ public class ButtonGroupPanel extends JPanel implements MouseMotionListener, Mou
     }
     public void open(){
         moving=true;
+        centerBtn.setText("-");
         for(int i=0;i<=5;i++){
             buttons[i].setVisible(true);
         }
