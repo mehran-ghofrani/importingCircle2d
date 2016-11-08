@@ -119,6 +119,7 @@ public class ButtonGroupPanel extends JPanel implements MouseListener, MouseMoti
         
         
         
+        
         for(int i=0;i<6;i++){
             buttons[i].setVisible(false);
         }

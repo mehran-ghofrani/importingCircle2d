@@ -22,7 +22,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import sun.security.jca.GetInstance;
 
-public class ImagePage extends JPanel{
+public class ImagePage extends JPanel implements MouseListener,MouseMotionListener{
     
     private Vector<ImageItem> imgs;
     private static ImagePage instance;
@@ -45,6 +45,8 @@ public class ImagePage extends JPanel{
         width=parent.getWidth();
         height=parent.getHeight();        
         setSize(width,height);
+        addMouseListener(this);
+        addMouseMotionListener(this);
     }
     public void initialize(){
         
@@ -81,7 +83,7 @@ public class ImagePage extends JPanel{
         for(int i=0;i<=imgs.size()-1;i++){
                 currentLocation[i]=width*(i-currentPic);
         }
-        final int stepsNum=right?500:-500;
+        final int stepsNum=right?100:-100;
         final double stepsLenght=(double)width/stepsNum;
         if (((1<=currentPic&&right)||(!right&&currentPic<=imgs.size()-2))&&!moving)
             new Thread(new Runnable() {
@@ -93,14 +95,52 @@ public class ImagePage extends JPanel{
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        for(int i=0;i<=imgs.size()-1;i++){                    
-                            imgs.get(i).setLocation((i-currentPic)*width+(int)(stepsLenght*j), 0);
+                        for(int i=currentPic-1;i<=currentPic+1;i++){  
+                            if(-1<i&&i<imgs.size())
+                                imgs.get(i).setLocation((i-currentPic)*width+(int)(stepsLenght*j), 0);
                         }
+
+                        ImagePage.this.repaint();
                     }
                     currentPic+=right?-1:+1;
                     ImagePage.moving=false;
                 }
             }).start();
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        imgs.get(currentPic).dispatchEvent(e);
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        imgs.get(currentPic).dispatchEvent(e);
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        imgs.get(currentPic).dispatchEvent(e);
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        imgs.get(currentPic).dispatchEvent(e);
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        imgs.get(currentPic).dispatchEvent(e);
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        imgs.get(currentPic).dispatchEvent(e);
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        imgs.get(currentPic).dispatchEvent(e);
     }
 }
 class ImageItem extends JPanel implements MouseListener{
@@ -138,7 +178,7 @@ class ImageItem extends JPanel implements MouseListener{
         
             
                
-        g.drawImage(image,0,0,getParent().getWidth() ,getParent().getHeight(),null);
+//        g.drawImage(image,0,0,getParent().getWidth() ,getParent().getHeight(),null);
         g.drawImage(image,(getParent().getWidth() - newWidth) / 2,(getParent().getHeight() - newHeight)/2 , newWidth, newHeight,null);
     }
     @Override

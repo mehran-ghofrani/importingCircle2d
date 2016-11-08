@@ -26,6 +26,7 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import pages.NavPage;
 
 /**
  *
@@ -44,6 +45,7 @@ public class Button extends Polygon implements MouseListener,MouseMotionListener
     String fontName;
     private boolean resizeByDrag;
     private int lastMouseX,lastMouseY;
+    public boolean pressed;
     
     
     
@@ -84,6 +86,9 @@ public class Button extends Polygon implements MouseListener,MouseMotionListener
             textBounds=getStringBounds((Graphics2D)g, text, x, y);
 
         }
+        
+        
+        
         
         
     }
@@ -200,12 +205,19 @@ public class Button extends Polygon implements MouseListener,MouseMotionListener
         if(mouseInArea(e)){
             lastMouseX=e.getX();
             lastMouseY=e.getY();
+            showFirstColor();
+            pressed=true;
+            if(text=="صفحه اصلی"){
+                NavPage.getInstance().startArrowMotion();
+                
+                
+            }
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        pressed=false;
     }
 
     @Override

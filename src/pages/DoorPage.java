@@ -79,12 +79,9 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
         }
         setVisible(false);
         
-        
-        
-
 
         
-                
+        
             
     }
     @Override
