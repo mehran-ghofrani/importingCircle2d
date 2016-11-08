@@ -18,7 +18,7 @@ import javax.swing.JPanel;
  *
  * @author Mactabi
  */
-public class ButtonGroupPanel extends JPanel implements MouseListener{
+public class ButtonGroupPanel extends JPanel implements MouseListener, MouseMotionListener{
     
     private boolean moving;
     private Button[] buttons=new Button[6];
@@ -34,7 +34,7 @@ public class ButtonGroupPanel extends JPanel implements MouseListener{
 //        setSize(width, (int)(3*Math.sqrt(3)*buttonsRR));
         setSize(width, (int)(6*buttonsRR));
         addMouseListener(this);
-        System.out.println(getWidth()+" "+getHeight());
+        addMouseMotionListener(this);
         init();
         
         
@@ -106,20 +106,32 @@ public class ButtonGroupPanel extends JPanel implements MouseListener{
             if(smallestFontSize>(int)buttons[i].fontSize)
                 smallestFontSize=(int)buttons[i].fontSize;
         }
-        for(int i=0;i<6;i++){
-            buttons[i].setFontSize(smallestFontSize);
-        }
-        centerBtn.setFontSize(smallestFontSize);
+        
         
         for(int i=0;i<6;i++){
-            buttons[i].setColor(new Color(255, 255, 255,100));
+            buttons[i].setFirstColor(new Color(100, 100, 100,150));
+            buttons[i].setSecondColor(new Color(255, 0, 0,255));
         }
-        centerBtn.setColor(new Color(255, 255, 255,100));
+        centerBtn.setFirstColor(new Color(100, 100, 100,150));
+        centerBtn.setSecondColor(new Color(255, 0, 0,255));
+        centerBtn.setFont("B Nazanin Outline");
+        
+        
+        
         
         for(int i=0;i<6;i++){
             buttons[i].setVisible(false);
         }
         
+        
+        
+        
+        
+        //should be last line for safe
+        for(int i=0;i<6;i++){
+            buttons[i].setFontSize(smallestFontSize);
+        }
+        centerBtn.setFontSize(smallestFontSize);
     }
     public void close(){
         moving=true;
@@ -191,6 +203,7 @@ public class ButtonGroupPanel extends JPanel implements MouseListener{
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
         centerBtn.mouseClicked(e);
         for(int i=0;i<=5;i++){
             buttons[i].mouseClicked(e);
@@ -199,18 +212,37 @@ public class ButtonGroupPanel extends JPanel implements MouseListener{
 
     @Override
     public void mousePressed(MouseEvent e) {
+        importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
+        importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
+        importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
+        centerBtn.mouseMoved(e);
+        for(int i=0;i<=5;i++){
+            buttons[i].mouseMoved(e);
+        }
+        repaint();
         
     }
     
