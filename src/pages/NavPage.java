@@ -68,8 +68,8 @@ public class NavPage extends JPanel implements MouseListener,MouseMotionListener
             public void run() {
                 while(true){
                     if(beatDone==2){
-                        try {
-                            Thread.sleep(1500);
+                        try { 
+                            Thread.sleep(700);
                         } catch (InterruptedException ex) {
                             Logger.getLogger(NavPage.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -85,7 +85,7 @@ public class NavPage extends JPanel implements MouseListener,MouseMotionListener
                         step*=-1;
                     if(a+Math.abs(step)>255)
                         beatDone++;
-                    if(!homeBtn.pressed){
+                    if(!homeBtn.pressed&&homeBtn.getRadius()<=homeBtnMinR){
                         homeBtn.setCurrentColor(new Color(255-a, 0, 0, 255-a));
                         homeBtn.setRadius((a/255d*0.2+0.8)*(homeBtnMinR));
                     }
@@ -98,19 +98,19 @@ public class NavPage extends JPanel implements MouseListener,MouseMotionListener
         
         //arrow
         int arrowX=getWidth()/10;
-        int arrowY=getHeight()/20;
+        int arrowY=getHeight()/10;
         points=new Point[7];   
         
-        points[0]=new Point(5*arrowX, 1*arrowY);
+        points[0]=new Point(5*arrowX, -4*arrowY);
         
-        points[1]=new Point(4*arrowX, 2*arrowY);
+        points[1]=new Point(4*arrowX, -2*arrowY);
         
-        points[2]=new Point((int)(4.5*arrowX), 2*arrowY);
-        points[3]=new Point((int)(4.5*arrowX), 4*arrowY);
-        points[4]=new Point((int)(5.5*arrowX), 4*arrowY);
-        points[5]=new Point((int)(5.5*arrowX), 2*arrowY);
+        points[2]=new Point((int)(4.5*arrowX), -2*arrowY);
+        points[3]=new Point((int)(4.5*arrowX), 0*arrowY);
+        points[4]=new Point((int)(5.5*arrowX), 0*arrowY);
+        points[5]=new Point((int)(5.5*arrowX), -2*arrowY);
         
-        points[6]=new Point(6*arrowX, 2*arrowY);
+        points[6]=new Point(6*arrowX, -2*arrowY);
         
         x=new int[7];
         y=new int[7];
@@ -130,7 +130,7 @@ public class NavPage extends JPanel implements MouseListener,MouseMotionListener
             @Override
             public void run() {
                 
-                    double speed=0.0005;
+                    double speed=-0.0005;
                 double arrowTranslationSpeed=0.001*speed;
                 while(arrowVisible){
 //                    try {
@@ -141,14 +141,20 @@ public class NavPage extends JPanel implements MouseListener,MouseMotionListener
 //assign 1 to speed if uncommented
                     
                     arrowTranslation+=arrowTranslationSpeed;
-                    if(arrowTranslation<0||1<arrowTranslation)
-                        arrowTranslationSpeed*=-1;
+                    if(0>arrowTranslation){
+                        arrowTranslation=1;
+                        try {
+                            Thread.sleep(300);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(DoorPage.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
                     for(int i=0;i<=6;i++){
 //                        x[i]=points[i].x;
                         y[i]=points[i].y+
                                 (int)((arrowTranslation)*
-                                (1/10d)*
-                                getWidth());
+                                (4/10d)*
+                                Math.min(getWidth(), getHeight()));
                         repaint();
                     }
                 }
@@ -179,9 +185,14 @@ public class NavPage extends JPanel implements MouseListener,MouseMotionListener
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while(homeBtn.getRadius()>homeBtnMinR){
+                while(!homeBtn.pressed&&homeBtn.getRadius()>homeBtnMinR){
                     homeBtn.setRadius(homeBtn.getRadius()-1);
                     NavPage.getInstance().repaint();
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(NavPage.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         }).start();
@@ -204,8 +215,11 @@ public class NavPage extends JPanel implements MouseListener,MouseMotionListener
         homeBtn.mouseDragged(e);
         if(homeBtn.getRadius()<homeBtnMinR)
             homeBtn.setRadius(homeBtnMinR);
-        if(homeBtn.getRadius()>homeBtnMaxR)
-            System.exit(0);
+        if(homeBtn.getRadius()>homeBtnMaxR){
+            homeBtn.setRadius(homeBtnMaxR);
+            importingcircle2d.ImportingCircle2d.getInstance().showPage(DoorPage.getInstance());
+            setVisible(false);
+        }
         repaint();
         importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
     }
@@ -218,12 +232,13 @@ public class NavPage extends JPanel implements MouseListener,MouseMotionListener
     
     @Override
     public void paintComponent(Graphics g){
+        super.paintComponent(g);
         homeBtn.draw(g);
         
         //arrow
         
         if(arrowVisible){
-            g.setColor(new Color(255, 0, 0, (int)(arrowTranslation*255)));
+            g.setColor(new Color(255, 0, 0, (int)((arrowTranslation-1)*-255)));
             g.fillPolygon(x,y,7);
         }
         

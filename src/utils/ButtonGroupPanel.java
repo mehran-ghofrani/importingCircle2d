@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import javax.swing.JPanel;
+import pages.ImagePage;
 
 /**
  *
@@ -79,7 +80,7 @@ public class ButtonGroupPanel extends JPanel implements MouseListener, MouseMoti
         buttons[2]=new Button("عکس",getWidth()/2,getHeight()/2,buttonsRR,new actionListener() {
             @Override
             public void actionPerformed(Button btn) {
-                
+                importingcircle2d.ImportingCircle2d.getInstance().showPage(ImagePage.getInstance());
             }
         });
         buttons[3]=new Button("دوربین هوشمند",getWidth()/2,getHeight()/2,buttonsRR,new actionListener() {

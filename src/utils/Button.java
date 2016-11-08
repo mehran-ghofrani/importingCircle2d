@@ -196,7 +196,7 @@ public class Button extends Polygon implements MouseListener,MouseMotionListener
 
     @Override
     public void mouseClicked(MouseEvent e) {
-            if(mouseInArea(e)&&listener!=null)
+            if(mouseInArea(e)&&listener!=null&&!moving&&visible)
                 listener.actionPerformed(this);
     }
 

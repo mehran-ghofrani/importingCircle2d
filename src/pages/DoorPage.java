@@ -116,7 +116,8 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
                 while(openedAmount<1)
                     openedAmount+=0.0000000001;
                 
-                importingcircle2d.ImportingCircle2d.getInstance().showPage(ImagePage.getInstance());
+                importingcircle2d.ImportingCircle2d.getInstance().showPage(blankPage.getInstance());
+                NavPage.getInstance().setVisible(true);
             }
         }).start();
                         
@@ -163,36 +164,40 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
     }
     @Override
     public void setVisible(boolean visibile){
+        openedAmount=0.01;
         super.setVisible(visibile);
+        boolean temp=this.visibile;
         this.visibile=visibile;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                double speed=0.0005;
-                double arrowTranslationSpeed=0.001*speed;
-                while(DoorPage.getInstance().visibile){
-//                    try {
-//                        Thread.sleep(1);
-//                    } catch (InterruptedException ex) {
-//                        Logger.getLogger(DoorPage.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//assign 1 to speed if uncommented
-                    if(openedAmount>0.001&&!mouseClicked)
-                        openedAmount-=openedAmount/500*speed;
-                    arrowTranslation+=arrowTranslationSpeed;
-                    if(arrowTranslation<0||1<arrowTranslation)
-                        arrowTranslationSpeed*=-1;
-                    for(int i=0;i<=6;i++){
-                        leftX[i]=points[i].x+
-                                (int)((arrowTranslation-openedAmount*5)*
-                                (1/10d)*
-                                DoorPage.getInstance().getWidth());
-                        rightX[i]=parent.getWidth()-leftX[i];
-                        y[i]=points[i].y;
-                        DoorPage.getInstance().repaint();
+        if(!temp){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    double speed=0.0005;
+                    double arrowTranslationSpeed=0.001*speed;
+                    while(DoorPage.getInstance().visibile){
+    //                    try {
+    //                        Thread.sleep(1);
+    //                    } catch (InterruptedException ex) {
+    //                        Logger.getLogger(DoorPage.class.getName()).log(Level.SEVERE, null, ex);
+    //                    }
+    //assign 1 to speed if uncommented
+                        if(openedAmount>0.001&&!mouseClicked)
+                            openedAmount-=openedAmount/500*speed;
+                        arrowTranslation+=arrowTranslationSpeed;
+                        if(arrowTranslation<0||1<arrowTranslation)
+                            arrowTranslationSpeed*=-1;
+                        for(int i=0;i<=6;i++){
+                            leftX[i]=points[i].x+
+                                    (int)((arrowTranslation-openedAmount*5)*
+                                    (1/10d)*
+                                    DoorPage.getInstance().getWidth());
+                            rightX[i]=parent.getWidth()-leftX[i];
+                            y[i]=points[i].y;
+                            DoorPage.getInstance().repaint();
+                        }
                     }
                 }
-            }
-        }).start();
+            }).start();
+        }
     }
 }
