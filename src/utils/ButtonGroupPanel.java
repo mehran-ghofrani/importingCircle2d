@@ -210,6 +210,7 @@ public class ButtonGroupPanel extends JPanel implements MouseListener, MouseMoti
         for(int i=0;i<=5;i++){
             buttons[i].mouseClicked(e);
         }
+        
     }
 
     @Override

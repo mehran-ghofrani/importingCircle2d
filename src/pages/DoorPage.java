@@ -39,6 +39,7 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
     
     
     
+    
     public static DoorPage getInstance(){
         if(instance==null)
             instance=new DoorPage();

@@ -74,6 +74,7 @@ public class Polygon
                     NavPage.getInstance().btnGP.repaint();
                 }
                 Polygon.this.moving=false;
+               
                 
             }
         },"mover").start();
