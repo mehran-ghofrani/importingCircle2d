@@ -14,7 +14,8 @@ import javax.swing.SwingUtilities;
 import pages.DoorPage;
 import pages.ImagePage;
 import pages.NavPage;
-import pages.blankPage;
+import pages.BlankPage;
+import pages.CameraPage;
 
 
 public class ImportingCircle2d extends JFrame implements MouseListener,MouseMotionListener{
@@ -78,20 +79,22 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
     public void initialize(){
         
         
-        layer.add(DoorPage.getInstance(),Integer.valueOf(0));
-        showPage(DoorPage.getInstance());
-        
-        layer.add(blankPage.getInstance(),Integer.valueOf(0));
-        layer.add(ImagePage.getInstance(),Integer.valueOf(0));
-        
-        
-        
-        
-        
-        ImagePage.getInstance().initialize();
+//        layer.add(DoorPage.getInstance(),Integer.valueOf(0));
+//        showPage(DoorPage.getInstance());
+//        
+//        layer.add(BlankPage.getInstance(),Integer.valueOf(0));
+//        layer.add(ImagePage.getInstance(),Integer.valueOf(0));
+//        
+//        
+//        
+//        
+//        
+//        ImagePage.getInstance().initialize();
+//
+//        NavPage.getInstance().setVisible(false);
+//        layer.add(NavPage.getInstance(),Integer.valueOf(1));
 
-        NavPage.getInstance().setVisible(false);
-        layer.add(NavPage.getInstance(),Integer.valueOf(1));
+        layer.add(CameraPage.getInstance());
         
     }
     public void showPage(JPanel page){

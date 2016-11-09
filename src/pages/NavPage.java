@@ -69,14 +69,14 @@ public class NavPage extends JPanel implements MouseListener,MouseMotionListener
                 while(true){
                     if(beatDone==2){
                         try { 
-                            Thread.sleep(700);
+                            Thread.sleep(1500);
                         } catch (InterruptedException ex) {
                             Logger.getLogger(NavPage.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         beatDone=0;
                     }
                     try {
-                        Thread.sleep(1);
+                        Thread.sleep(3);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(NavPage.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -86,7 +86,7 @@ public class NavPage extends JPanel implements MouseListener,MouseMotionListener
                     if(a+Math.abs(step)>255)
                         beatDone++;
                     if(!homeBtn.pressed&&homeBtn.getRadius()<=homeBtnMinR){
-                        homeBtn.setCurrentColor(new Color(255-a, 0, 0, 255-a));
+                        homeBtn.setCurrentColor(new Color(100, 100, 100, 255-a));
                         homeBtn.setRadius((a/255d*0.2+0.8)*(homeBtnMinR));
                     }
                     
@@ -153,7 +153,7 @@ public class NavPage extends JPanel implements MouseListener,MouseMotionListener
 //                        x[i]=points[i].x;
                         y[i]=points[i].y+
                                 (int)((arrowTranslation)*
-                                (4/10d)*
+                                (8/10d)*
                                 Math.min(getWidth(), getHeight()));
                         repaint();
                     }
@@ -239,7 +239,7 @@ public class NavPage extends JPanel implements MouseListener,MouseMotionListener
         //arrow
         
         if(arrowVisible){
-            g.setColor(new Color(255, 0, 0, (int)((arrowTranslation-1)*-255)));
+            g.setColor(new Color(0, 0, 0, (int)((arrowTranslation-1)*-255)));
             g.fillPolygon(x,y,7);
         }
         

@@ -46,6 +46,7 @@ public class Button extends Polygon implements MouseListener,MouseMotionListener
     private boolean resizeByDrag;
     private int lastMouseX,lastMouseY;
     public boolean pressed;
+    public boolean textVisible;
     
     
     
@@ -57,6 +58,7 @@ public class Button extends Polygon implements MouseListener,MouseMotionListener
         textColor=Color.black;
         visible=true;
         fontName="Nazanin";
+        textVisible=true;
         
         
         Graphics g=importingcircle2d.ImportingCircle2d.getInstance().getGraphics();
@@ -136,11 +138,11 @@ public class Button extends Polygon implements MouseListener,MouseMotionListener
             
             if(resizeByDrag){
                 g.setFont(new Font(fontName, 0, (int)fontSize));
-                g.drawString(text, (int)(x-textBounds.getX()-textBounds.getWidth()/2), (int)(y-textBounds.getY()-textBounds.getHeight()));
+                if(textVisible)g.drawString(text, (int)(x-textBounds.getX()-textBounds.getWidth()/2), (int)(y-textBounds.getY()-textBounds.getHeight()));
             }
             else{
                 g.setFont(new Font(fontName, 0, (int)fontSize));
-                g.drawString(text, (int)(x-textBounds.getX()-textBounds.getWidth()/2), (int)(y-textBounds.getY()-textBounds.getHeight()/2));
+                if(textVisible)g.drawString(text, (int)(x-textBounds.getX()-textBounds.getWidth()/2), (int)(y-textBounds.getY()-textBounds.getHeight()/2));
             }
 //            g.translate((int)(x-textBounds.getX()-textBounds.getWidth()/2), (int)(y-textBounds.getY()-textBounds.getHeight()/2));
 //            ((Graphics2D)g).draw(textBounds);
@@ -193,7 +195,9 @@ public class Button extends Polygon implements MouseListener,MouseMotionListener
     public void setText(String text){
         this.text=text;
     }
- 
+    public void setTextVisible(boolean visible){
+        textVisible=visible;
+    }
     @Override
     public void mouseClicked(MouseEvent e) {
             if(mouseInArea(e)&&listener!=null&&!moving&&visible)
@@ -209,7 +213,7 @@ public class Button extends Polygon implements MouseListener,MouseMotionListener
             pressed=true;
             if(text=="صفحه اصلی"){
                 NavPage.getInstance().startArrowMotion();
-                
+                setTextVisible(false);
                 
             }
         }
@@ -217,7 +221,10 @@ public class Button extends Polygon implements MouseListener,MouseMotionListener
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        pressed=false;
+        
+        if(mouseInArea(e)&&text=="صفحه اصلی")
+            setTextVisible(true);
+            pressed=false;
     }
 
     @Override

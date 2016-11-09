@@ -111,10 +111,10 @@ public class ButtonGroupPanel extends JPanel implements MouseListener, MouseMoti
         
         for(int i=0;i<6;i++){
             buttons[i].setFirstColor(new Color(100, 100, 100,150));
-            buttons[i].setSecondColor(new Color(255, 0, 0,255));
+            buttons[i].setSecondColor(new Color(100, 100, 100,255));
         }
         centerBtn.setFirstColor(new Color(100, 100, 100,150));
-        centerBtn.setSecondColor(new Color(255, 0, 0,255));
+        centerBtn.setSecondColor(new Color(100, 100, 100,255));
         centerBtn.setFont("B Nazanin Outline");
         
         

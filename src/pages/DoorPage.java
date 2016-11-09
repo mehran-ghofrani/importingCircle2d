@@ -117,7 +117,7 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
                 while(openedAmount<1)
                     openedAmount+=0.0000000001;
                 
-                importingcircle2d.ImportingCircle2d.getInstance().showPage(blankPage.getInstance());
+                importingcircle2d.ImportingCircle2d.getInstance().showPage(BlankPage.getInstance());
                 NavPage.getInstance().setVisible(true);
             }
         }).start();
