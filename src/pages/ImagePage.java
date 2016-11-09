@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import java.util.Vector;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import sun.security.jca.GetInstance;
 
 public class ImagePage extends JPanel implements MouseListener,MouseMotionListener{
@@ -51,14 +52,18 @@ public class ImagePage extends JPanel implements MouseListener,MouseMotionListen
     public void initialize(){
         
         setVisible(false);
+//        imgs.add(new ImageItem("res//img//1.jpg"));
+//        imgs.add(new ImageItem("res//img//2.png"));
+//        imgs.add(new ImageItem("res//img//3.jpg"));
+//        imgs.add(new ImageItem("res//img//4.jpg"));
+//        imgs.add(new ImageItem("res//img//5.jpg"));
+//        imgs.add(new ImageItem("res//img//6.jpg"));
+//        imgs.add(new ImageItem("res//img//7.jpg"));
+//        imgs.add(new ImageItem("res//img//8.jpg"));
         imgs.add(new ImageItem("res//img//1.jpg"));
-        imgs.add(new ImageItem("res//img//2.png"));
+        imgs.add(new ImageItem("res//img//2.jpg"));
         imgs.add(new ImageItem("res//img//3.jpg"));
         imgs.add(new ImageItem("res//img//4.jpg"));
-        imgs.add(new ImageItem("res//img//5.jpg"));
-        imgs.add(new ImageItem("res//img//6.jpg"));
-        imgs.add(new ImageItem("res//img//7.jpg"));
-        imgs.add(new ImageItem("res//img//8.jpg"));
         int i=0;
         for(ImageItem imgItm:imgs){
             add(imgs.get(i));
@@ -97,15 +102,23 @@ public class ImagePage extends JPanel implements MouseListener,MouseMotionListen
                         }
                         for(int i=currentPic-1;i<=currentPic+1;i++){  
                             if(-1<i&&i<imgs.size())
-                                imgs.get(i).setLocation((i-currentPic)*width+(int)(stepsLenght*j), 0);
+                                imgs.get(i).setLocation((int)((i-currentPic)*width+stepsLenght*j), 0);
                         }
 
-                        ImagePage.this.repaint();
+                        
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                ImagePage.this.repaint();
+//                                ImagePage.this.paintComponents(ImagePage.this.getGraphics());
+                            }
+                        });
                     }
                     currentPic+=right?-1:+1;
                     ImagePage.moving=false;
                 }
             }).start();
+        
     }
 
     @Override
@@ -150,6 +163,7 @@ class ImageItem extends JPanel implements MouseListener{
     private int lastY;
     
     public ImageItem(String imgAddress) {
+        setSize(importingcircle2d.ImportingCircle2d.getInstance().getSize());
         setBackground(Color.white);
         addMouseListener(this);
         try {
@@ -159,10 +173,11 @@ class ImageItem extends JPanel implements MouseListener{
             ex.printStackTrace();
             System.out.println(imgAddress);
         }        
+        scratchImg();
     }
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    private void scratchImg(){
+        
+        
         double imageAspect=(double)image.getWidth()/image.getHeight();
         double screenAspect=(double)importingcircle2d.ImportingCircle2d.getInstance().width/importingcircle2d.ImportingCircle2d.getInstance().height;
         boolean screenIsWider=imageAspect<screenAspect;
@@ -176,10 +191,16 @@ class ImageItem extends JPanel implements MouseListener{
         int newWidth=(int)(image.getWidth()/scale);
         int newHeight=(int)(image.getHeight()/scale);
         
-            
-               
-//        g.drawImage(image,0,0,getParent().getWidth() ,getParent().getHeight(),null);
-        g.drawImage(image,(getParent().getWidth() - newWidth) / 2,(getParent().getHeight() - newHeight)/2 , newWidth, newHeight,null);
+        BufferedImage tempImg = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+        tempImg.createGraphics().drawImage(image, (tempImg.getWidth()-newWidth)/2, (tempImg.getHeight()-newHeight)/2, newWidth, newHeight,null);
+        image=tempImg;
+    }
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(image, 0, 0, null);
+
+
     }
     @Override
     public void mouseClicked(MouseEvent e) {

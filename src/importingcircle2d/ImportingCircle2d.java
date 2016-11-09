@@ -78,23 +78,27 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
     }
     public void initialize(){
         
+        NavPage.getInstance().setVisible(false);
+        layer.add(NavPage.getInstance(),Integer.valueOf(1));
         
-//        layer.add(DoorPage.getInstance(),Integer.valueOf(0));
-//        showPage(DoorPage.getInstance());
-//        
-//        layer.add(BlankPage.getInstance(),Integer.valueOf(0));
-//        layer.add(ImagePage.getInstance(),Integer.valueOf(0));
-//        
-//        
-//        
-//        
-//        
-//        ImagePage.getInstance().initialize();
-//
-//        NavPage.getInstance().setVisible(false);
-//        layer.add(NavPage.getInstance(),Integer.valueOf(1));
+        
+        layer.add(DoorPage.getInstance(),Integer.valueOf(0));
+        showPage(DoorPage.getInstance());
+        
+        layer.add(BlankPage.getInstance(),Integer.valueOf(0));
+        layer.add(ImagePage.getInstance(),Integer.valueOf(0));
+        
+        
+        
+        
+        
+        ImagePage.getInstance().initialize();
 
-        layer.add(CameraPage.getInstance());
+        
+        
+
+//        layer.add(CameraPage.getInstance());
+//        showPage(CameraPage.getInstance());
         
     }
     public void showPage(JPanel page){

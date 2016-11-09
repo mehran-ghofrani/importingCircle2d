@@ -214,9 +214,9 @@ public class NavPage extends JPanel implements MouseListener,MouseMotionListener
     @Override
     public void mouseDragged(MouseEvent e) {
         homeBtn.mouseDragged(e);
-        if(homeBtn.getRadius()<homeBtnMinR)
+        if(homeBtn.getRadius()<homeBtnMinR&&homeBtn.pressed)
             homeBtn.setRadius(homeBtnMinR);
-        if(homeBtn.getRadius()>homeBtnMaxR){
+        if(homeBtn.getRadius()>homeBtnMaxR&&homeBtn.pressed){
             homeBtn.setRadius(homeBtnMaxR);
             importingcircle2d.ImportingCircle2d.getInstance().showPage(DoorPage.getInstance());
             setVisible(false);
@@ -250,7 +250,11 @@ public class NavPage extends JPanel implements MouseListener,MouseMotionListener
         
     }
 
-    
+    @Override
+    public void setVisible(boolean visible){
+        super.setVisible(visible);
+        homeBtn.setTextVisible(true);
+    }
     
     
 }

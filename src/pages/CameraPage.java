@@ -45,7 +45,7 @@ public class CameraPage extends JPanel
         setSize(importingcircle2d.ImportingCircle2d.getInstance().getSize());
         setLocation(0, 0);
 
-//      currentIndex = MainFrame.getInstance().addPanel(this);
+
 
     }
 
@@ -212,7 +212,7 @@ public class CameraPage extends JPanel
             width = (int) (height * aspectRatio);
             g.drawImage(currentImg.getScaledInstance(width, height, Image.SCALE_FAST)
                     , (getWidth() - width) / 2, (getHeight() - height) / 2, this);
-            g.setFont(new Font("", 0, 20));
+            g.setFont(new Font("", 0, 300));
             if (timer >= 6) g.setColor(Color.green);
             else if (timer >= 4) g.setColor(Color.yellow);
             else g.setColor(Color.red);
@@ -247,172 +247,22 @@ public class CameraPage extends JPanel
         timer--;
     }
 
- //    @Override
-//    public int getPanelIndex()
-//    {
-//        return currentIndex;
-//    }
 
-//    @Override
-//    public void beforeShow()
-//    {
-//
-//    }
 
-//    @Override
-//    public void afterShow()
-//    {
-//
-//        showCamera = true;
-//        showCapture = false;
-//        MainFrame.getInstance().hideNavbar();
-//        MainFrame.getInstance().hideLogo();
-//
-//        currentImg = null;
-//        initializeTimer();
-//
-//        if(!camera.isOpened())
-//        {
-//            camera.open(0);
-//        }
-//
-//        Mat frame = new Mat();
-//        waitUntilCameraIsConnected();
-//
-//        timerThread = new Thread(new Runnable()
-//        {
-//            @Override
-//            public void run()
-//            {
-//                while (!isShowing())
-//                {
-//                    if(showCamera == false)
-//                    {
-//                        Thread.currentThread().interrupt();
-//                        return;
-//                    }
-//                    try
-//                    {
-//                        Thread.sleep(10);
-//                    } catch (InterruptedException e)
-//                    {
-//                        e.printStackTrace();
-//                    }
-//                }
-//
-//                while (getTimer() > 0)
-//                {
-//                    if(showCamera == false)
-//                    {
-//                        Thread.currentThread().interrupt();
-//                        return;
-//                    }
-//                    System.out.println(getTimer());
-//                    decreaseTimer();
-//                    try
-//                    {
-//                        Thread.sleep(1000);
-//                    } catch (InterruptedException e)
-//                    {
-//                        Thread.currentThread().interrupt();
-//                        e.printStackTrace();
-//                        return;
-//                    }
-//                }
-//                showCamera = false;
-//                showCapturingEffect();
-//                System.out.println("thread timer ended");
-//                synchronized (currentImg)
-//                {
-//                    RetryPage.getInstance().setImage(currentImg);
-//                }
-//                try
-//                {
-//                    Thread.sleep(500);
-//                } catch (InterruptedException e)
-//                {
-//                    e.printStackTrace();
-//                }
-//                MainFrame.getInstance().showPanel(RetryPage.getInstance().getPanelIndex());
-//            }
-//        });
-//
-//        cameraThread = new Thread(new Runnable()
-//        {
-//            @Override
-//            public void run()
-//            {
-//                while (true)
-//                {
-//                    if (showCamera == false)
-//                        break;
-//                    if (getCamera().read(frame))
-//                    {
-//                        Mat flippedFrame = new Mat();
-//                        Core.flip(frame, flippedFrame, 1);
-//                        BufferedImage image = MatToBufferedImage(flippedFrame);
-//                        setImage(image);
-//                        repaint();
-//                    } else
-//                    {
-//                        if (timerThread != null)
-//                        {
-//                            System.out.println("suspend");
-//                            if (timerThread.isAlive())
-//                                timerThread.suspend();
-//                        }
-//                        waitUntilCameraIsConnected();
-//                        waitUntilImageIsReady();
-//                        if (timerThread != null)
-//                        {
-//                            System.out.println("resume");
-//                            timerThread.resume();
-//                        }
-//                    }
-//                }
-//                getCamera().release();
-//                System.out.println("camera released");
-//            }
-//        });
-//
-//
-//        cameraThread.start();
-//        timerThread.start();
-//
-//    }
+
+
+
 
     private void initializeTimer()
     {
         timer = 8;
     }
 
-//    @Override
-//    public void beforeDispose()
-//    {
-//
-//    }
 
-//    @Override
-//    public void afterDispose()
-//    {
-//        showCamera = false;
-//        showCapture = false;
-//        if(camera != null) camera.release();
-////        if(cameraThread.isAlive())
-////            cameraThread.interrupt();
-////        if(timerThread.isAlive())
-////            timerThread.interrupt();
-//    }
+        
+    
 
-//    @Override
-//    public void beforeKeyboardShow() {
-//
-//    }
 
-//    @Override
-//    public void afterKeyboardDispose() {
-//
-//    }
 
     public VideoCapture getCamera()
     {
@@ -422,6 +272,142 @@ public class CameraPage extends JPanel
     public void setCamera(VideoCapture camera)
     {
         this.camera = camera;
+    }
+    
+    
+    @Override
+    public void setVisible(boolean visible){
+        super.setVisible(visible);
+        if(visible){
+            showCamera = true;
+            showCapture = false;
+//            MainFrame.getInstance().hideNavbar();
+//            MainFrame.getInstance().hideLogo();
+
+            currentImg = null;
+            initializeTimer();
+
+            if(!camera.isOpened())
+            {
+                camera.open(0);
+            }
+
+            Mat frame = new Mat();
+            waitUntilCameraIsConnected();
+
+            timerThread = new Thread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    while (!isShowing())
+                    {
+                        if(showCamera == false)
+                        {
+                            Thread.currentThread().interrupt();
+                            return;
+                        }
+                        try
+                        {
+                            Thread.sleep(10);
+                        } catch (InterruptedException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    while (getTimer() > 0)
+                    {
+                        if(showCamera == false)
+                        {
+                            Thread.currentThread().interrupt();
+                            return;
+                        }
+                        System.out.println(getTimer());
+                        decreaseTimer();
+                        try
+                        {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e)
+                        {
+                            Thread.currentThread().interrupt();
+                            e.printStackTrace();
+                            return;
+                        }
+                    }
+                    showCamera = false;
+                    showCapturingEffect();
+                    System.out.println("thread timer ended");
+                    synchronized (currentImg)
+                    {
+//                        RetryPage.getInstance().setImage(currentImg);
+                    }
+                    try
+                    {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e)
+                    {
+                        e.printStackTrace();
+                    }
+//                    MainFrame.getInstance().showPanel(RetryPage.getInstance().getPanelIndex());
+                }
+            });
+
+            cameraThread = new Thread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    while (true)
+                    {
+                        if (showCamera == false)
+                            break;
+                        if (getCamera().read(frame))
+                        {
+                            Mat flippedFrame = new Mat();
+                            Core.flip(frame, flippedFrame, 1);
+                            BufferedImage image = MatToBufferedImage(flippedFrame);
+                            setImage(image);
+                            repaint();
+                        } else
+                        {
+                            if (timerThread != null)
+                            {
+                                System.out.println("suspend");
+                                if (timerThread.isAlive())
+                                    timerThread.suspend();
+                            }
+                            waitUntilCameraIsConnected();
+                            waitUntilImageIsReady();
+                            if (timerThread != null)
+                            {
+                                System.out.println("resume");
+                                timerThread.resume();
+                            }
+                        }
+                    }
+                    getCamera().release();
+                    System.out.println("camera released");
+                }
+            });
+
+
+            cameraThread.start();
+            timerThread.start();
+
+            
+        }
+        else{
+            showCamera = false;
+            showCapture = false;
+            if(camera != null) camera.release();
+    //        if(cameraThread.isAlive())
+    //            cameraThread.interrupt();
+    //        if(timerThread.isAlive())
+    //            timerThread.interrupt();
+            
+            
+        }
     }
 }
 

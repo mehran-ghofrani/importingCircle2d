@@ -55,6 +55,7 @@ public class ButtonGroupPanel extends JPanel implements MouseListener, MouseMoti
         centerBtn=new Button("+",getWidth()/2,getHeight()/2,buttonsRR,new actionListener() {
             @Override
             public void actionPerformed(Button btn) {
+                if(!moving)
                 if(closed)
                     open();
                 else
@@ -68,37 +69,39 @@ public class ButtonGroupPanel extends JPanel implements MouseListener, MouseMoti
         buttons[0]=new Button("سلفی",getWidth()/2,getHeight()/2,buttonsRR,new actionListener() {
             @Override
             public void actionPerformed(Button btn) {
+                centerBtn.listener.actionPerformed(centerBtn);
                 
             }
         });
         buttons[1]=new Button("از من بپرس",getWidth()/2,getHeight()/2,buttonsRR,new actionListener() {
             @Override
             public void actionPerformed(Button btn) {
-                
+                centerBtn.listener.actionPerformed(centerBtn);
             }
         });
-        buttons[2]=new Button("عکس",getWidth()/2,getHeight()/2,buttonsRR,new actionListener() {
+        buttons[2]=new Button("تصاویر",getWidth()/2,getHeight()/2,buttonsRR,new actionListener() {
             @Override
             public void actionPerformed(Button btn) {
                 importingcircle2d.ImportingCircle2d.getInstance().showPage(ImagePage.getInstance());
+                centerBtn.listener.actionPerformed(centerBtn);
             }
         });
         buttons[3]=new Button("دوربین هوشمند",getWidth()/2,getHeight()/2,buttonsRR,new actionListener() {
             @Override
             public void actionPerformed(Button btn) {
-                
+                centerBtn.listener.actionPerformed(centerBtn);
             }
         });
         buttons[4]=new Button("فیلم",getWidth()/2,getHeight()/2,buttonsRR,new actionListener() {
             @Override
             public void actionPerformed(Button btn) {
-                
+                centerBtn.listener.actionPerformed(centerBtn);
             }
         });
         buttons[5]=new Button("کاتالوگ",getWidth()/2,getHeight()/2,buttonsRR,new actionListener() {
             @Override
             public void actionPerformed(Button btn) {
-                
+                centerBtn.listener.actionPerformed(centerBtn);
             }
         });
         
@@ -145,7 +148,8 @@ public class ButtonGroupPanel extends JPanel implements MouseListener, MouseMoti
             @Override
             public void run() {      
                 int n=0;
-                while(buttons[5].moving){
+                while(buttons[0].moving||buttons[1].moving||buttons[2].moving||
+                        buttons[3].moving||buttons[4].moving||buttons[5].moving){
                     System.out.println("waiting to complete close"+n);
                     n++;
                 }
@@ -174,7 +178,8 @@ public class ButtonGroupPanel extends JPanel implements MouseListener, MouseMoti
             @Override
             public void run() {                
                 int n=0;
-                while(buttons[5].moving){
+                while(buttons[0].moving||buttons[1].moving||buttons[2].moving||
+                        buttons[3].moving||buttons[4].moving||buttons[5].moving){
                     System.out.println("waiting to complete open"+n);
                     n++;
                 }

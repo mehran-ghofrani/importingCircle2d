@@ -40,7 +40,7 @@ public class Button extends Polygon implements MouseListener,MouseMotionListener
     private Color textColor;
     Rectangle2D textBounds; 
     double fontSize;
-    private actionListener listener;
+    public actionListener listener;
     public boolean visible;
     String fontName;
     private boolean resizeByDrag;

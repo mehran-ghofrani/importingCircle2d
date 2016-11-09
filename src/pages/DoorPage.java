@@ -36,6 +36,7 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
     private int lastMouseY;
     private boolean mouseClicked;
     private boolean dragStartedFromLeft;
+    private boolean closing;
     
     
     
@@ -57,7 +58,8 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
         int arrowY=getHeight()/10;   
         mouseClicked=false;
         openedAmount=0.001;
-        points=new Point[7];   
+        points=new Point[7];
+        
         
         points[0]=new Point(1*arrowX, 5*arrowY);
         
@@ -114,10 +116,13 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
             new Thread(new Runnable() {
             @Override
             public void run() {
+                closing=true;
                 while(openedAmount<1)
                     openedAmount+=0.0000000001;
                 
                 importingcircle2d.ImportingCircle2d.getInstance().showPage(BlankPage.getInstance());
+                NavPage.getInstance().setVisible(true);
+                closing=false;
                 NavPage.getInstance().setVisible(true);
             }
         }).start();
@@ -146,17 +151,7 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
         g.fillPolygon(rightX,y,7);
         
         
-//        Button b=new Button("ی", getWidth()/2, getHeight()/2, 100,new actionListener() {
-//            @Override
-//            public void actionPerformed() {
-//                System.out.println(".actionPerformed()");
-//                        
-//                        
-//                        
-//
-//            }
-//        });
-//        b.draw(g);
+
         
         
         
@@ -165,7 +160,7 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
     }
     @Override
     public void setVisible(boolean visibile){
-        openedAmount=0.01;
+        openedAmount=0.001;
         super.setVisible(visibile);
         boolean temp=this.visibile;
         this.visibile=visibile;
@@ -182,7 +177,7 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
     //                        Logger.getLogger(DoorPage.class.getName()).log(Level.SEVERE, null, ex);
     //                    }
     //assign 1 to speed if uncommented
-                        if(openedAmount>0.001&&!mouseClicked)
+                        if(openedAmount>0.001&&!mouseClicked&&!closing)
                             openedAmount-=openedAmount/500*speed;
                         arrowTranslation+=arrowTranslationSpeed;
                         if(arrowTranslation<0||1<arrowTranslation)
