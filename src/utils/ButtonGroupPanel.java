@@ -14,6 +14,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import javax.swing.JPanel;
 import pages.ImagePage;
+import uiComponents.pages.EntrancePage;
+import uiComponents.pages.ImageCapturingPage;
+import uiComponents.pages.MainFrame;
 
 /**
  *
@@ -70,6 +73,7 @@ public class ButtonGroupPanel extends JPanel implements MouseListener, MouseMoti
             @Override
             public void actionPerformed(Button btn) {
                 centerBtn.listener.actionPerformed(centerBtn);
+                MainFrame.getInstance().showPanel(ImageCapturingPage.getInstance().getPanelIndex());
                 
             }
         });

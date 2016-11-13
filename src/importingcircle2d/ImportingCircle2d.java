@@ -15,7 +15,13 @@ import pages.DoorPage;
 import pages.ImagePage;
 import pages.NavPage;
 import pages.BlankPage;
-import pages.CameraPage;
+import db.DBManager;
+import pages.camera.uiComponents.pages.CatalogEmailSendingPage;
+import uiComponents.pages.EntrancePage;
+import uiComponents.pages.ImageCapturingPage;
+import uiComponents.pages.MainFrame;
+import uiComponents.pages.RetryPage;
+
 
 
 public class ImportingCircle2d extends JFrame implements MouseListener,MouseMotionListener{
@@ -97,8 +103,17 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
         
         
 
-//        layer.add(CameraPage.getInstance());
-//        showPage(CameraPage.getInstance());
+//init camera components...
+        DBManager.getMyInstance();
+        EntrancePage.getInstance();
+        ImageCapturingPage.getInstance();
+        RetryPage.getInstance();
+        CatalogEmailSendingPage.getInstance();
+
+//        MainFrame.getInstance().showPanel(EntrancePage.getInstance().getPanelIndex());
+///////////////
+          
+          
         
     }
     public void showPage(JPanel page){
