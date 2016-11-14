@@ -1,7 +1,6 @@
-package uiComponents;
+package pages.camera.uiComponents;
 
-import uiComponents.pages.EntrancePage;
-import uiComponents.pages.MainFrame;
+import pages.camera.uiComponents.pages.EntrancePage;
 
 /**
  * Created by Mactabi on 14/08/2016.
@@ -14,7 +13,7 @@ public class TimerPanel {
             public void run() {
                 spentTime++;
                 if(spentTime==30)
-                    MainFrame.getInstance().showPanel(EntrancePage.getInstance().getPanelIndex());
+                    ImportingCircle2d.getInstance().showPanel(EntrancePage.getInstance().getPanelIndex());
             }
 
         }).start();
