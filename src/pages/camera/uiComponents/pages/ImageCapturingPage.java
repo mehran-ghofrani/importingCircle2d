@@ -55,6 +55,10 @@ public class ImageCapturingPage extends JPanel implements ActivityPage
 
         if (instance == null)
             instance = new ImageCapturingPage();
+        if(instance.isVisible()==false){
+            instance.beforeDispose();
+            instance.afterDispose();
+        }
         return instance;
     }
 
