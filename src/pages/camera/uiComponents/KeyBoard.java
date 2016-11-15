@@ -3,28 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package uiComponents;
+package pages.camera.uiComponents;
 
-import uiComponents.uiInterfaces.EnterActionPerformListener;
-import uiComponents.pages.MainFrame;
+import pages.camera.uiComponents.uiInterfaces.TouchKeyboardHandler;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import pages.camera.uiComponents.uiInterfaces.EnterActionPerformListener;
 
 public class KeyBoard extends JPanel
 {
     protected static Runnable deleter;
     protected static boolean deleterActive = false;
     protected static boolean firstCharDelay = true;
-    protected MainFrame parent;
+    protected importingcircle2d.ImportingCircle2d parent;
 
     private EnterActionPerformListener enterActionPerformListener;
     private JTextField textField;
 
-    public KeyBoard(MainFrame parent)
+    public KeyBoard(importingcircle2d.ImportingCircle2d parent)
     {
         this.parent = parent;
         deleter = new Runnable()
@@ -34,9 +34,9 @@ public class KeyBoard extends JPanel
             {
                 while (KeyBoard.deleterActive == true)
                 {
-                    parent.setListenToKeyboardShow(false);
+//                    parent.setListenToKeyboardShow(false);
                     getTextField().requestFocusInWindow();
-                    parent.setListenToKeyboardShow(true);
+//                    parent.setListenToKeyboardShow(true);
                     if (KeyBoard.firstCharDelay == true)
                     {
                         try
@@ -76,7 +76,8 @@ public class KeyBoard extends JPanel
         };
 
         setLayout(null);
-        setSize(parent.getKeyboardPanel().getSize());
+        setSize(parent.getWidth(),parent.getHeight()/3);
+        setLocation(0, parent.getHeight()*2/3);
         final int keysHeight = (int) getHeight() / 4;
         final int keysWidth = (int) getWidth() / 14;
 
@@ -160,9 +161,9 @@ public class KeyBoard extends JPanel
                     @Override
                     public void actionPerformed(ActionEvent e)
                     {
-                        parent.setListenToKeyboardShow(false);
+//                        parent.setListenToKeyboardShow(false);
                         getTextField().requestFocusInWindow();
-                        parent.setListenToKeyboardShow(true);
+//                        parent.setListenToKeyboardShow(true);
 
                         MButton b = ((MButton) e.getSource());
 //                    char a;
@@ -277,9 +278,9 @@ public class KeyBoard extends JPanel
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                parent.setListenToKeyboardShow(false);
+//                parent.setListenToKeyboardShow(false);
                 getTextField().requestFocusInWindow();
-                parent.setListenToKeyboardShow(true);
+//                parent.setListenToKeyboardShow(true);
 
                 try
                 {
@@ -341,9 +342,9 @@ public class KeyBoard extends JPanel
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                parent.setListenToKeyboardShow(false);
+//                parent.setListenToKeyboardShow(false);
                 getTextField().requestFocusInWindow();
-                parent.setListenToKeyboardShow(true);
+//                parent.setListenToKeyboardShow(true);
 
                 try
                 {
@@ -397,9 +398,9 @@ public class KeyBoard extends JPanel
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                parent.setListenToKeyboardShow(false);
+//                parent.setListenToKeyboardShow(false);
                 getTextField().requestFocusInWindow();
-                parent.setListenToKeyboardShow(true);
+//                parent.setListenToKeyboardShow(true);
 
                 try
                 {

@@ -16,21 +16,26 @@ import pages.ImagePage;
 import pages.NavPage;
 import pages.BlankPage;
 import db.DBManager;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import pages.camera.uiComponents.KeyBoard;
+import pages.camera.uiComponents.TouchJTextField;
 import pages.camera.uiComponents.pages.CatalogEmailSendingPage;
-import uiComponents.pages.EntrancePage;
-import uiComponents.pages.ImageCapturingPage;
-import uiComponents.pages.MainFrame;
-import uiComponents.pages.RetryPage;
+import pages.camera.uiComponents.pages.ImageCapturingPage;
+import pages.camera.uiComponents.pages.RetryPage;
+import pages.camera.uiComponents.uiInterfaces.ActivityPage;
+import pages.camera.uiComponents.uiInterfaces.EnterActionPerformListener;
 
 
 
-public class ImportingCircle2d extends JFrame implements MouseListener,MouseMotionListener{
+public class ImportingCircle2d extends JFrame implements MouseListener,MouseMotionListener,WindowListener{
 
     public int height;
     public int width;
     private static ImportingCircle2d instance;
     public JPanel currentPage;
     public JLayeredPane layer;
+    public KeyBoard keyboardPanel;
     
     public static void main(String[] args) {
         importingcircle2d.ImportingCircle2d.getInstance().initialize();
@@ -42,6 +47,8 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
     }
     private ImportingCircle2d(){
         
+        setLayout(null);
+        addWindowListener(this);
         setBackground(Color.yellow);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         width = (int)screenSize.getWidth();
@@ -56,6 +63,11 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
         layer.setSize(getSize());
         layer.setVisible(true);
         add(layer);
+        
+        keyboardPanel=new KeyBoard(this);
+        add(keyboardPanel);
+        keyboardPanel.setVisible(false);
+        
 //        layer.addMouseListener(new MouseListener() {
 //            @Override
 //            public void mouseClicked(MouseEvent e) {
@@ -91,8 +103,24 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
         layer.add(DoorPage.getInstance(),Integer.valueOf(0));
         showPage(DoorPage.getInstance());
         
+        
+        DBManager.getMyInstance();
+        
+        BlankPage.getInstance().setVisible(false);
+        ImagePage.getInstance().setVisible(false);
+        ImageCapturingPage.getInstance().setVisible(false);
+        RetryPage.getInstance().setVisible(false);
+        CatalogEmailSendingPage.getInstance().setVisible(false);
+                
         layer.add(BlankPage.getInstance(),Integer.valueOf(0));
         layer.add(ImagePage.getInstance(),Integer.valueOf(0));
+        //init camera components...
+        
+        layer.add(ImageCapturingPage.getInstance(),Integer.valueOf(0));
+        layer.add(RetryPage.getInstance(),Integer.valueOf(0));
+        layer.add(CatalogEmailSendingPage.getInstance(),Integer.valueOf(0));
+        
+///////////////
         
         
         
@@ -103,15 +131,7 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
         
         
 
-//init camera components...
-        DBManager.getMyInstance();
-        EntrancePage.getInstance();
-        ImageCapturingPage.getInstance();
-        RetryPage.getInstance();
-        CatalogEmailSendingPage.getInstance();
 
-//        MainFrame.getInstance().showPanel(EntrancePage.getInstance().getPanelIndex());
-///////////////
           
           
         
@@ -120,13 +140,32 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                if(currentPage!=null)
-                currentPage.setVisible(false);
+                if(currentPage!=null){
+                    currentPage.setVisible(false);
+                    if(page instanceof ActivityPage){
+                        ((ActivityPage)page).beforeDispose();
+                        ((ActivityPage)page).afterDispose();
+                    }
+                }
+                if(page instanceof ActivityPage){
+                    ((ActivityPage)page).beforeShow();
+                    ((ActivityPage)page).afterShow();
+                }
                 page.setVisible(true);
                 currentPage=page;
             }
         });
         
+    }
+    public void hideKeyBoard(){
+        keyboardPanel.setVisible(false);
+        layer.setLocation(0, 0);
+    }
+    public void showKeyBoard(TouchJTextField textField, EnterActionPerformListener listener){
+        keyboardPanel.setEnterActionPerformListener(listener);
+        keyboardPanel.setTextField(textField);
+        keyboardPanel.setVisible(true);
+        layer.setLocation(0, -keyboardPanel.getHeight());
     }
 
     @Override
@@ -156,11 +195,42 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+//        ((ActivityPage)ImageCapturingPage.getInstance()).beforeDispose();
+//        ((ActivityPage)ImageCapturingPage.getInstance()).afterDispose();
+//        System.exit(0);
+        
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+    }
+    
 }

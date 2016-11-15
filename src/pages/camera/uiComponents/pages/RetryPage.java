@@ -1,7 +1,8 @@
-package uiComponents.pages;
+package pages.camera.uiComponents.pages;
 
-import uiComponents.TouchJTextField;
-import uiComponents.uiInterfaces.ActivityPage;
+import importingcircle2d.ImportingCircle2d;
+import pages.camera.uiComponents.TouchJTextField;
+import pages.camera.uiComponents.uiInterfaces.ActivityPage;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -31,7 +32,7 @@ public class RetryPage extends JPanel implements ActivityPage
     private Image logoImage;
     private Image userImg;
     private int currentIndex;
-    private MainFrame parent;
+    private importingcircle2d.ImportingCircle2d parent;
     private JLabel infoLable;
     static RetryPage instance;
 
@@ -45,7 +46,7 @@ public class RetryPage extends JPanel implements ActivityPage
     private RetryPage()
     {
 
-        this.parent = MainFrame.getInstance();
+        this.parent = ImportingCircle2d.getInstance();
 
         try
         {
@@ -159,7 +160,7 @@ public class RetryPage extends JPanel implements ActivityPage
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                MainFrame.getInstance().goPreviousPage();
+                ImportingCircle2d.getInstance().showPage(ImageCapturingPage.getInstance());
             }
         });
 
@@ -176,7 +177,7 @@ public class RetryPage extends JPanel implements ActivityPage
                 {
                     e1.printStackTrace();
                 }
-                MainFrame.getInstance().showPanel(CatalogEmailSendingPage.getInstance().getPanelIndex());
+                ImportingCircle2d.getInstance().showPage(CatalogEmailSendingPage.getInstance());
 
             }
 
@@ -253,7 +254,7 @@ public class RetryPage extends JPanel implements ActivityPage
             }
         });
 
-        currentIndex = parent.addPanel(this);
+//        currentIndex = parent.addPanel(this);
 
 
     }
@@ -295,8 +296,8 @@ public class RetryPage extends JPanel implements ActivityPage
     @Override
     public void afterShow()
     {
-        MainFrame.getInstance().showNavbar();
-        MainFrame.getInstance().showLogo();
+//        ImportingCircle2d.getInstance().showNavbar();
+//        ImportingCircle2d.getInstance().showLogo();
     }
 
     @Override

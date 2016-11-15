@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package uiComponents.pages;
+package pages.camera.uiComponents.pages;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.highgui.VideoCapture;
-import uiComponents.uiInterfaces.ActivityPage;
+import pages.camera.uiComponents.uiInterfaces.ActivityPage;
 import utilities.Fonts;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +18,8 @@ import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
+import pages.BlankPage;
+import pages.NavPage;
 
 public class ImageCapturingPage extends JPanel implements ActivityPage
 {
@@ -43,10 +44,10 @@ public class ImageCapturingPage extends JPanel implements ActivityPage
 
         camera = new VideoCapture(0);
 
-        setSize(MainFrame.getInstance().getMainPanelSize());
+        setSize(importingcircle2d.ImportingCircle2d.getInstance().getSize());
         setLocation(0, 0);
 
-        currentIndex = MainFrame.getInstance().addPanel(this);
+//        currentIndex = MainFrame.getInstance().addPanel(this);
     }
 
     public static ImageCapturingPage getInstance()
@@ -80,7 +81,8 @@ public class ImageCapturingPage extends JPanel implements ActivityPage
             int result = JOptionPane.showConfirmDialog(this, "خطا در اتصال به دوربین", "خطا", JOptionPane.OK_CANCEL_OPTION);
             if(result == JOptionPane.CANCEL_OPTION)
             {
-                MainFrame.getInstance().goHomePage();
+                importingcircle2d.ImportingCircle2d.getInstance().showPage(BlankPage.getInstance());
+                NavPage.getInstance().setVisible(true);
                 return;
             }
             camera.open(0);
@@ -213,8 +215,8 @@ public class ImageCapturingPage extends JPanel implements ActivityPage
             g.drawImage(currentImg.getScaledInstance(width, height, Image.SCALE_FAST)
                     , (getWidth() - width) / 2, (getHeight() - height) / 2, this);
             g.setFont(Fonts.englishTimerFont);
-            if (timer >= 6) g.setColor(Color.green);
-            else if (timer >= 4) g.setColor(Color.yellow);
+            if (timer >= 10) g.setColor(Color.green);
+            else if (timer >= 5) g.setColor(Color.yellow);
             else g.setColor(Color.red);
             if (timer > 0)
                 g.drawString(timer.toString(), (getWidth() / 2) - 140, (getHeight() / 2) + 100);
@@ -265,8 +267,8 @@ public class ImageCapturingPage extends JPanel implements ActivityPage
 
         showCamera = true;
         showCapture = false;
-        MainFrame.getInstance().hideNavbar();
-        MainFrame.getInstance().hideLogo();
+//        MainFrame.getInstance().hideNavbar();
+//        MainFrame.getInstance().hideLogo();
 
         currentImg = null;
         initializeTimer();
@@ -333,7 +335,7 @@ public class ImageCapturingPage extends JPanel implements ActivityPage
                 {
                     e.printStackTrace();
                 }
-                MainFrame.getInstance().showPanel(RetryPage.getInstance().getPanelIndex());
+                importingcircle2d.ImportingCircle2d.getInstance().showPage(RetryPage.getInstance());
             }
         });
 
@@ -383,7 +385,7 @@ public class ImageCapturingPage extends JPanel implements ActivityPage
 
     private void initializeTimer()
     {
-        timer = 8;
+        timer = 3;
     }
 
     @Override

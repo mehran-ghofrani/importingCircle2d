@@ -1,6 +1,6 @@
-package uiComponents.uiInterfaces;
+package pages.camera.uiComponents.uiInterfaces;
 
-import uiComponents.TouchJTextField;
+import pages.camera.uiComponents.TouchJTextField;
 
 /**
  * Created by online on 8/8/2016.

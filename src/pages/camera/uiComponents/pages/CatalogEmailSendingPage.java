@@ -1,12 +1,11 @@
 package pages.camera.uiComponents.pages;
 
 import db.DBManager;
-import uiComponents.TouchJTextField;
-import uiComponents.uiInterfaces.EnterActionPerformListener;
-import uiComponents.uiInterfaces.ActivityPage;
+import pages.camera.uiComponents.TouchJTextField;
+import pages.camera.uiComponents.uiInterfaces.EnterActionPerformListener;
+import pages.camera.uiComponents.uiInterfaces.ActivityPage;
 import utilities.EmailUtils;
 import utilities.ImageUtilities;
-import uiComponents.pages.MainFrame;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -15,6 +14,8 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import pages.BlankPage;
+import pages.NavPage;
 
 import static utilities.EmailUtils.isValidEmailAddress;
 import static utilities.Fonts.bodyFont;
@@ -31,7 +32,7 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
     private TouchJTextField emailInputField;
     private JLabel emailLabel;
 
-//    private MainFrame parent;
+//    private ImportingCircle2d parent;
     private int currentIndex;
     private Image frameImage;
     private Image logoImage;
@@ -40,7 +41,7 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
 
     private CatalogEmailSendingPage()
     {
-//        this.parent = MainFrame.getInstance();
+//        this.parent = ImportingCircle2d.getInstance();
         try
         {
             frameImage = ImageIO.read(new File("icons\\ImageFrame3.png"));
@@ -123,8 +124,14 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
         c.gridy = i++;
         c.gridwidth = 1;
         c.fill = GridBagConstraints.HORIZONTAL;
-        emailInputField = new TouchJTextField("", "example@host.com", MainFrame.getInstance());
+        emailInputField = new TouchJTextField("", "example@host.com", importingcircle2d.ImportingCircle2d.getInstance());
         emailInputField.setColumns(45);
+        emailInputField.setEnterActionPerformListener(new EnterActionPerformListener() {
+            @Override
+            public void EnterActionPerform() {
+                CatalogEmailSendingPage.this.EnterActionPerform();
+            }
+        });
         add(emailInputField, c);
 
 
@@ -249,7 +256,7 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
                 requestFocusInWindow();
             }
         });
-        currentIndex = MainFrame.getInstance().addPanel(this);
+//        currentIndex = ImportingCircle2d.getInstance().addPanel(this);
     }
 
     private void resetStatusLabel()
@@ -302,7 +309,8 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
                     }
                     resetStatusLabel();
                     emailInputField.setText("");
-                    MainFrame.getInstance().goHomePage();
+                    importingcircle2d.ImportingCircle2d.getInstance().showPage(BlankPage.getInstance());
+                    NavPage.getInstance().setVisible(true);
                 }
             }).start();
         } else
@@ -327,13 +335,13 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
     @Override
     public void afterShow()
     {
-        MainFrame.getInstance().showNavbar();
+//        ImportingCircle2d.getInstance().showNavbar();
         setVisibleAll(true);
         submitBtn.setEnabled(true);
         emailInputField.getGhostText().setEmpty(true);
         emailInputField.requestFocus();
         submitBtn.requestFocus();
-        MainFrame.getInstance().showLogo();
+//        ImportingCircle2d.getInstance().showLogo();
     }
 
     @Override

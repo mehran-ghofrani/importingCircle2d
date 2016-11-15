@@ -1,4 +1,4 @@
-package uiComponents;
+package pages.camera.uiComponents;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;

@@ -1,4 +1,4 @@
-package uiComponents.uiInterfaces;
+package pages.camera.uiComponents.uiInterfaces;
 
 /**
  * Created by online on 8/7/2016.

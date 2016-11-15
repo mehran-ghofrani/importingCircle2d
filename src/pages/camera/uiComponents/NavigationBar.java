@@ -1,6 +1,6 @@
-package uiComponents;
+package pages.camera.uiComponents;
 
-import uiComponents.pages.MainFrame;
+
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -16,10 +16,10 @@ import java.io.IOException;
 public class NavigationBar extends JPanel
 {
     private JButton homeBtn, backbtn;
-    private MainFrame parent;
+    private ImportingCircle2d2 parent;
     private Image homeImg, backImg;
 
-    public NavigationBar(MainFrame parent)
+    public NavigationBar(ImportingCircle2d2 parent)
     {
         this.parent = parent;
         initComponents();

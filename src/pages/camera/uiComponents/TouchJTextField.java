@@ -1,21 +1,22 @@
-package uiComponents;
+package pages.camera.uiComponents;
 
-import uiComponents.pages.MainFrame;
 
 import javax.swing.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import pages.camera.uiComponents.uiInterfaces.EnterActionPerformListener;
 
 public class TouchJTextField extends JTextField
 {
+    private EnterActionPerformListener enterActionPerformListener;
     private GhostText ghostText;
 
 
     private boolean isSensetiveToTouch;
-    private MainFrame parent;
+    private importingcircle2d.ImportingCircle2d parent;
     private String text;
 
-    public TouchJTextField(String text, String ghostText, MainFrame parent)
+    public TouchJTextField(String text, String ghostText, importingcircle2d.ImportingCircle2d parent)
     {
         super(text);
         this.parent = parent;
@@ -35,7 +36,7 @@ public class TouchJTextField extends JTextField
             @Override
             public void focusGained(FocusEvent e)
             {
-                parent.showKeyBoard(TouchJTextField.this);
+                parent.showKeyBoard(TouchJTextField.this, TouchJTextField.this.enterActionPerformListener);
             }
 
             @Override
@@ -60,5 +61,14 @@ public class TouchJTextField extends JTextField
     public boolean isSensetiveToTouch()
     {
         return isSensetiveToTouch;
+    }
+    public EnterActionPerformListener getEnterActionPerformListener()
+    {
+        return enterActionPerformListener;
+    }
+
+    public void setEnterActionPerformListener(EnterActionPerformListener enterActionPerformListener)
+    {
+        this.enterActionPerformListener = enterActionPerformListener;
     }
 }
