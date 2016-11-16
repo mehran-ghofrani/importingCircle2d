@@ -14,6 +14,9 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.opencv.core.Core;
 import pages.BlankPage;
 import pages.NavPage;
 
@@ -37,6 +40,10 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
     private Image frameImage;
     private Image logoImage;
     private JLabel imagePanel;
+    
+    utils.Polygon submitBtnCircle;
+    boolean submitBtnClicked;
+    boolean submitBtnCircleMaked;
 
 
     private CatalogEmailSendingPage()
@@ -83,6 +90,7 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
 
     private void initComponents()
     {
+        
         setSize(importingcircle2d.ImportingCircle2d.getInstance().getSize());
         setLocation(0, 0);
         setBackground(Color.WHITE);
@@ -135,13 +143,21 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
         add(emailInputField, c);
 
 
-        submitBtn = new JButton("ارسال");
+        submitBtn = new JButton("         "+"ارسال"+"         "){
+            @Override
+            public void paintComponent(Graphics g){
+                super.paintComponent(g);
+                if(submitBtnCircle!=null)
+                    submitBtnCircle.draw(g);
+            }
+        };
         submitBtn.setFont(bodyFont);
         c.ipadx = 100;
-        c.ipady = 0;
+        c.ipady = 100;
         c.gridx = 0;
         c.gridy = i++;
         c.gridwidth = 2;
+        c.gridheight= 3;
         c.fill = GridBagConstraints.NONE;
         add(submitBtn, c);
 
@@ -155,6 +171,12 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
         statusLabel.setFont(bodyFont);
         add(statusLabel, c);
 
+        
+        
+        submitBtn.setBorder(null);
+        submitBtn.setBorderPainted(false);
+        submitBtn.setContentAreaFilled(false);
+        submitBtn.setOpaque(false);
         submitBtn.addMouseListener(new MouseListener()
         {
             @Override
@@ -166,13 +188,57 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
             @Override
             public void mousePressed(MouseEvent e)
             {
-                EnterActionPerform();
+                
+                submitBtnClicked=true;
+                if(!submitBtnCircleMaked){
+                    submitBtnCircle=new utils.Polygon(100, submitBtn.getWidth()/2, submitBtn.getHeight()/2, 0);
+                    submitBtnCircle.setFirstColor(new Color(0, 255, 0, 44));
+                }
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while(submitBtnClicked){
+                            try {
+                                Thread.sleep(1);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(CatalogEmailSendingPage.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(submitBtnCircle.getRadius()<submitBtn.getWidth()/2)
+                                submitBtnCircle.setRadius(submitBtnCircle.getRadius()+1);
+                            submitBtn.repaint();
+                            
+                            
+                            
+                        }
+                    }
+                }).start();
             }
 
             @Override
             public void mouseReleased(MouseEvent e)
             {
-
+                if(submitBtnClicked==true)
+                    infoLable.requestFocus();
+                
+                submitBtnClicked=false;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while(!submitBtnClicked){
+                            try {
+                                Thread.sleep(1);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(CatalogEmailSendingPage.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(submitBtnCircle.getRadius()>0)
+                                submitBtnCircle.setRadius(submitBtnCircle.getRadius()-1); 
+                            submitBtn.repaint();
+                            
+                            
+                            
+                        }
+                    }
+                }).start();
             }
 
             @Override
@@ -184,7 +250,28 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
             @Override
             public void mouseExited(MouseEvent e)
             {
-
+                if(submitBtnClicked==true)
+                    infoLable.requestFocus();
+                
+                submitBtnClicked=false;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while(!submitBtnClicked){
+                            try {
+                                Thread.sleep(1);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(CatalogEmailSendingPage.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(submitBtnCircle!=null&&submitBtnCircle.getRadius()>0)
+                                submitBtnCircle.setRadius(submitBtnCircle.getRadius()-1); 
+                            submitBtn.repaint();
+                            
+                            
+                            
+                        }
+                    }
+                }).start();
             }
         });
         submitBtn.addActionListener(new ActionListener()
@@ -210,7 +297,7 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
 
             }
         });
-        submitBtn.requestFocus();
+//        submitBtn.requestFocus();
 
         setFocusTraversalPolicy(new FocusTraversalPolicy()
         {
@@ -316,7 +403,10 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
         } else
         {
             statusLabel.setFont(bodyFont);
-            statusLabel.setText("<html>ایمیل <font color='red'>اشتباه</font> وارد شده است</html>");
+            if(emailInputField.getValidText()==(String)"")
+                statusLabel.setText("لطفا ایمیل را وارد کنید");
+            else
+                statusLabel.setText("<html>ایمیل <font color='red'>اشتباه</font> وارد شده است</html>");
         }
     }
 
@@ -402,3 +492,4 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
         add(imagePanel, c);
     }
 }
+
