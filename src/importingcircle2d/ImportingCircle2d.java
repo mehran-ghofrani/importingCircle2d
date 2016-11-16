@@ -119,6 +119,7 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
                     if(spentTimeSinceLastUsage>60){
                         showPage(BlankPage.getInstance());
                         NavPage.getInstance().setVisible(true);
+                        hideKeyBoard();
                     }
                 }
             }
@@ -138,6 +139,7 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
         
         layer.add(DoorPage.getInstance(),Integer.valueOf(0));
         showPage(DoorPage.getInstance());
+//        showPage(CatalogEmailSendingPage.getInstance());
         
         
         DBManager.getMyInstance();

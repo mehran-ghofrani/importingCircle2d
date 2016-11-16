@@ -4,6 +4,7 @@ package pages.camera.uiComponents;
 import javax.swing.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import pages.camera.uiComponents.pages.CatalogEmailSendingPage;
 import pages.camera.uiComponents.uiInterfaces.EnterActionPerformListener;
 
 public class TouchJTextField extends JTextField
@@ -42,7 +43,8 @@ public class TouchJTextField extends JTextField
             @Override
             public void focusLost(FocusEvent e)
             {
-                parent.hideKeyBoard();
+                if(!CatalogEmailSendingPage.getInstance().submitBtnClicked)
+                    parent.hideKeyBoard();
             }
         });
 

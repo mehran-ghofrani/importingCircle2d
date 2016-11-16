@@ -29,6 +29,7 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
 {
     private static CatalogEmailSendingPage instance = null;
     private Image userImg;
+    private JLabel infoLable0;
     private JLabel infoLable;
     private JButton submitBtn;
     private JLabel statusLabel;
@@ -42,7 +43,7 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
     private JLabel imagePanel;
     
     utils.Polygon submitBtnCircle;
-    boolean submitBtnClicked;
+    public boolean submitBtnClicked;
     boolean submitBtnCircleMaked;
 
 
@@ -91,6 +92,16 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
     private void initComponents()
     {
         
+        addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                importingcircle2d.ImportingCircle2d.getInstance().hideKeyBoard();
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+            }
+        });
         setSize(importingcircle2d.ImportingCircle2d.getInstance().getSize());
         setLocation(0, 0);
         setBackground(Color.WHITE);
@@ -103,8 +114,25 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
 
         int i = 1;
 
+        c.ipady = 0;
+        c.insets = new Insets(0, 0, 0, 0);
+        c.weighty = 0;
+        c.weightx = 0;
+        c.gridx = 0;
+        c.gridy = i++;
+        c.gridwidth = 2;
+        c.fill = GridBagConstraints.NONE;
+        
+        
+        String infoMsg0 = "محل تبلیغات شما";
+        infoLable0 = new JLabel(infoMsg0);
+        infoLable0.setFont(headingFont);
+        add(infoLable0, c);
+        
+        
+        
         c.ipady = 20;
-        c.insets = new Insets(10, 0, 30, 0);
+        c.insets = new Insets(0, 0, 0, 0);
         c.weighty = 0;
         c.weightx = 0;
         c.gridx = 0;
