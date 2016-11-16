@@ -16,8 +16,12 @@ import pages.ImagePage;
 import pages.NavPage;
 import pages.BlankPage;
 import db.DBManager;
+import java.awt.AWTEvent;
+import java.awt.event.AWTEventListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pages.camera.uiComponents.KeyBoard;
 import pages.camera.uiComponents.TouchJTextField;
 import pages.camera.uiComponents.pages.CatalogEmailSendingPage;
@@ -36,6 +40,8 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
     public JPanel currentPage;
     public JLayeredPane layer;
     public KeyBoard keyboardPanel;
+    private long spentTimeSinceLastUsage;
+   
     
     public static void main(String[] args) {
         importingcircle2d.ImportingCircle2d.getInstance().initialize();
@@ -91,6 +97,36 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
 //        });
         
         
+        long eventMask = AWTEvent.MOUSE_MOTION_EVENT_MASK
+        + AWTEvent.MOUSE_EVENT_MASK
+        + AWTEvent.KEY_EVENT_MASK;
+        Toolkit.getDefaultToolkit().addAWTEventListener( new AWTEventListener(){
+            public void eventDispatched(AWTEvent e){
+                spentTimeSinceLastUsage=0;
+            }
+        }, eventMask);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(ImportingCircle2d.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    spentTimeSinceLastUsage++;
+                    System.out.println(".run()");
+                    if(spentTimeSinceLastUsage>60){
+                        showPage(BlankPage.getInstance());
+                        NavPage.getInstance().setVisible(true);
+                    }
+                }
+            }
+        }).start();
+
+
+
+
 
 
     }
@@ -160,12 +196,16 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
     public void hideKeyBoard(){
         keyboardPanel.setVisible(false);
         layer.setLocation(0, 0);
+        if(currentPage instanceof ActivityPage)
+            ((ActivityPage)currentPage).afterKeyboardDispose();
     }
     public void showKeyBoard(TouchJTextField textField, EnterActionPerformListener listener){
         keyboardPanel.setEnterActionPerformListener(listener);
         keyboardPanel.setTextField(textField);
         keyboardPanel.setVisible(true);
         layer.setLocation(0, -keyboardPanel.getHeight());
+        if(currentPage instanceof ActivityPage)
+            ((ActivityPage)currentPage).beforeKeyboardShow();
     }
 
     @Override
@@ -207,10 +247,11 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
 
     @Override
     public void windowClosing(WindowEvent e) {
-//        ((ActivityPage)ImageCapturingPage.getInstance()).beforeDispose();
-//        ((ActivityPage)ImageCapturingPage.getInstance()).afterDispose();
-//        System.exit(0);
-        
+        if(currentPage instanceof ActivityPage){
+            ((ActivityPage)currentPage).beforeDispose();
+            ((ActivityPage)currentPage).afterDispose();
+        }
+        System.exit(0);
     }
 
     @Override

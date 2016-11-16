@@ -141,10 +141,10 @@ public class DoorPage extends JPanel implements MouseMotionListener,MouseListene
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         g.setColor(Color.white);
-        for(int y=0;y<=100;y+=2){
-            g.drawLine((getWidth()/10), y*(getWidth()/100), getWidth()/10, (y+1)*(getWidth()/100));
-            g.drawLine(getWidth()/10*9, y*(getWidth()/100), getWidth()/10*9, (y+1)*(getWidth()/100));
-        }
+//        for(int y=0;y<=100;y+=2){
+//            g.drawLine((getWidth()/10), y*(getWidth()/100), getWidth()/10, (y+1)*(getWidth()/100));
+//            g.drawLine(getWidth()/10*9, y*(getWidth()/100), getWidth()/10*9, (y+1)*(getWidth()/100));
+//        }
         g.fillRect((int)(getWidth()/2-openedAmount*(getWidth()/2)), 0, (int)(openedAmount*getWidth()), getHeight());
         g.setColor(new Color(255, 255, 255, (int)(arrowTranslation*255)));
         g.fillPolygon(leftX,y,7);

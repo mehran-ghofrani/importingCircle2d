@@ -101,11 +101,16 @@ public class KeyBoard extends JPanel
         JButton enter = new JButton("Enter");
         JButton dotcom = new JButton(".com");
         JButton atsign = new JButton("@");
-        enter.setBackground(Color.yellow);
+        enter.setBackground(Color.black);
         shift.setBackground(Color.yellow);
-        backSpace.setBackground(Color.yellow);
-        dotcom.setBackground(Color.green);
-        atsign.setBackground(Color.green);
+        backSpace.setBackground(Color.black);
+        dotcom.setBackground(Color.black);
+        atsign.setBackground(Color.black);
+        dotcom.setForeground(Color.white);
+        atsign.setForeground(Color.white);
+        backSpace.setForeground(Color.white);
+        enter.setForeground(Color.white);
+        
 
 
         shift.setFocusable(false);
@@ -120,6 +125,8 @@ public class KeyBoard extends JPanel
                 MButton btn = btns[i][j] = new MButton(i, j);
                 btn.setFocusable(false);
                 String s = lowerKeys[i][j] + "";
+                btn.setBackground(Color.BLACK);
+                btn.setForeground(Color.WHITE);
                 btn.setText(s);
                 btn.setSize(keysWidth, keysHeight);
                 btn.setLocation(currentLocation);
@@ -135,13 +142,13 @@ public class KeyBoard extends JPanel
                     @Override
                     public void mousePressed(MouseEvent e)
                     {
-                        ((JButton) e.getSource()).setBackground(Color.black);
+                        ((JButton) e.getSource()).setBackground(Color.white);
                     }
 
                     @Override
                     public void mouseReleased(MouseEvent e)
                     {
-                        ((JButton) e.getSource()).setBackground(null);
+                        ((JButton) e.getSource()).setBackground(Color.BLACK);
                     }
 
                     @Override
@@ -307,13 +314,13 @@ public class KeyBoard extends JPanel
             @Override
             public void mousePressed(MouseEvent e)
             {
-                ((JButton) e.getSource()).setBackground(Color.black);
+                ((JButton) e.getSource()).setBackground(Color.white);
             }
 
             @Override
             public void mouseReleased(MouseEvent e)
             {
-                ((JButton) e.getSource()).setBackground(Color.yellow);
+                ((JButton) e.getSource()).setBackground(Color.black);
             }
 
             @Override
@@ -370,14 +377,14 @@ public class KeyBoard extends JPanel
             @Override
             public void mousePressed(MouseEvent e)
             {
-                ((JButton) e.getSource()).setBackground(Color.black);
+                ((JButton) e.getSource()).setBackground(Color.white);
 
             }
 
             @Override
             public void mouseReleased(MouseEvent e)
             {
-                ((JButton) e.getSource()).setBackground(Color.green);
+                ((JButton) e.getSource()).setBackground(Color.black);
 
             }
 
@@ -432,14 +439,14 @@ public class KeyBoard extends JPanel
             @Override
             public void mousePressed(MouseEvent e)
             {
-                ((JButton) e.getSource()).setBackground(Color.black);
+                ((JButton) e.getSource()).setBackground(Color.white);
 
             }
 
             @Override
             public void mouseReleased(MouseEvent e)
             {
-                ((JButton) e.getSource()).setBackground(Color.green);
+                ((JButton) e.getSource()).setBackground(Color.black);
 
             }
 
@@ -506,7 +513,7 @@ class deletorListener implements MouseListener
     @Override
     public void mousePressed(MouseEvent e)
     {
-        ((JButton) e.getSource()).setBackground(Color.black);
+        ((JButton) e.getSource()).setBackground(Color.white);
         KeyBoard.deleterActive = true;
         new Thread(KeyBoard.deleter).start();
 
@@ -516,7 +523,7 @@ class deletorListener implements MouseListener
     public void mouseReleased(MouseEvent e)
     {
         KeyBoard.deleterActive = false;
-        ((JButton) e.getSource()).setBackground(Color.yellow);
+        ((JButton) e.getSource()).setBackground(Color.black);
     }
 
     @Override

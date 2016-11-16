@@ -119,11 +119,11 @@ public class ButtonGroupPanel extends JPanel implements MouseListener, MouseMoti
         
         
         for(int i=0;i<6;i++){
-            buttons[i].setFirstColor(new Color(100, 100, 100,150));
-            buttons[i].setSecondColor(new Color(100, 100, 100,255));
+            buttons[i].setFirstColor(new Color(0, 0, 255,100));
+            buttons[i].setSecondColor(new Color(0, 0, 255,255));
         }
-        centerBtn.setFirstColor(new Color(100, 100, 100,150));
-        centerBtn.setSecondColor(new Color(100, 100, 100,255));
+        centerBtn.setFirstColor(new Color(0, 0, 255,100));
+        centerBtn.setSecondColor(new Color(0, 0, 255,255));
         centerBtn.setFont("B Nazanin Outline");
         
         
@@ -208,6 +208,7 @@ public class ButtonGroupPanel extends JPanel implements MouseListener, MouseMoti
         for(int i=0;i<=5;i++){
             buttons[i].draw(g);
         }
+        //homeBtn last...so when closing paints on others
         centerBtn.draw(g);
         
     }

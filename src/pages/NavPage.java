@@ -39,6 +39,7 @@ public class NavPage extends JPanel implements MouseListener,MouseMotionListener
     private int[] x;
     private int[] y;
     
+    
 
 
     public static NavPage getInstance(){
