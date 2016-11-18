@@ -112,14 +112,27 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
         GridBagConstraints c = new GridBagConstraints();
 
 
-        int i = 1;
+        
 
-        c.ipady = 0;
-        c.insets = new Insets(0, 0, 0, 0);
+        c.ipady = 1;
+        c.insets = new Insets(10, 0, 0, 0);
         c.weighty = 0;
         c.weightx = 0;
         c.gridx = 0;
-        c.gridy = i++;
+        c.gridy = 0;
+        c.gridwidth = 2;
+        c.fill = GridBagConstraints.NONE;
+        
+        
+        
+        add(new JLabel(), c);
+        
+        c.ipady = 1;
+        c.insets = new Insets(10, 0, 0, 0);
+        c.weighty = 0;
+        c.weightx = 0;
+        c.gridx = 0;
+        c.gridy = 1;
         c.gridwidth = 2;
         c.fill = GridBagConstraints.NONE;
         
@@ -129,7 +142,7 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
         infoLable0.setFont(headingFont);
         add(infoLable0, c);
         
-        
+        int i = 3;
         
         c.ipady = 20;
         c.insets = new Insets(0, 0, 0, 0);
@@ -426,6 +439,7 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
                     emailInputField.setText("");
                     importingcircle2d.ImportingCircle2d.getInstance().showPage(BlankPage.getInstance());
                     NavPage.getInstance().setVisible(true);
+                    importingcircle2d.ImportingCircle2d.getInstance().hideKeyBoard();
                 }
             }).start();
         } else
@@ -514,7 +528,7 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
         c.weighty = 0;
         c.weightx = 0;
         c.gridx = 0;
-        c.gridy = 0;
+        c.gridy = 2;
         c.gridwidth = 2;
         c.fill = GridBagConstraints.NONE;
         add(imagePanel, c);
