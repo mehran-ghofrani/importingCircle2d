@@ -64,6 +64,7 @@ public class ImagePage extends JPanel implements MouseListener,MouseMotionListen
         imgs.add(new ImageItem("res//img//2.jpg"));
         imgs.add(new ImageItem("res//img//3.jpg"));
         imgs.add(new ImageItem("res//img//4.jpg"));
+        imgs.add(new ImageItem("res//img//5.jpg"));
         int i=0;
         for(ImageItem imgItm:imgs){
             add(imgs.get(i));

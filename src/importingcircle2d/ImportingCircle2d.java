@@ -22,6 +22,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import pages.CatalogPage;
 import pages.VideoPage;
 import pages.camera.uiComponents.KeyBoard;
 import pages.camera.uiComponents.TouchJTextField;
@@ -138,6 +139,7 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
         layer.add(NavPage.getInstance(),Integer.valueOf(1));
         
         
+        
         layer.add(DoorPage.getInstance(),Integer.valueOf(0));
         layer.add(VideoPage.getInstance(),Integer.valueOf(0));
         showPage(VideoPage.getInstance());
@@ -148,6 +150,7 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
         
         BlankPage.getInstance().setVisible(false);
         ImagePage.getInstance().setVisible(false);
+        CatalogPage.getInstance().setVisible(false);
         ImageCapturingPage.getInstance().setVisible(false);
         RetryPage.getInstance().setVisible(false);
         CatalogEmailSendingPage.getInstance().setVisible(false);
@@ -156,7 +159,7 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
         layer.add(ImagePage.getInstance(),Integer.valueOf(0));
         //init camera components...
         
-        layer.add(ImageCapturingPage.getInstance(),Integer.valueOf(0));
+//        layer.add(ImageCapturingPage.getInstance(),Integer.valueOf(0));
         layer.add(RetryPage.getInstance(),Integer.valueOf(0));
         layer.add(CatalogEmailSendingPage.getInstance(),Integer.valueOf(0));
         

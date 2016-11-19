@@ -5,6 +5,7 @@
  */
 package utils;
 
+import com.sun.org.apache.xml.internal.resolver.Catalog;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -13,6 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import javax.swing.JPanel;
+import pages.CatalogPage;
 import pages.ImagePage;
 import pages.NavPage;
 import pages.camera.uiComponents.pages.ImageCapturingPage;
@@ -108,6 +110,7 @@ public class ButtonGroupPanel extends JPanel implements MouseListener, MouseMoti
             @Override
             public void actionPerformed(Button btn) {
                 centerBtn.listener.actionPerformed(centerBtn);
+                importingcircle2d.ImportingCircle2d.getInstance().showPage(CatalogPage.getInstance());
             }
         });
         

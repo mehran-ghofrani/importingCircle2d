@@ -192,7 +192,7 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
                     submitBtnCircle.draw(g);
             }
         };
-        submitBtn.setFont(bodyFont);
+        submitBtn.setFont(new  Font("B Nazanin Outline", 0, 30));
         c.ipadx = 100;
         c.ipady = 100;
         c.gridx = 0;
