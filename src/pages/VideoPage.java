@@ -100,7 +100,7 @@ class SceneGenerator {
     final StackPane layout = new StackPane();
 
     // determine the source directory for the playlist
-    final File dir = new File("C:\\Users\\Mactabi\\Desktop\\");
+    final File dir = new File("C:\\Users\\mgh\\Desktop");
     if (!dir.exists() || !dir.isDirectory()) {
       System.out.println("Cannot find video source directory: " + dir);
       Platform.exit();

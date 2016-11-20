@@ -14,9 +14,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import javax.swing.JPanel;
+import pages.AskPage;
 import pages.CatalogPage;
 import pages.ImagePage;
 import pages.NavPage;
+import pages.SmartCamera;
+import pages.VideoPage;
 import pages.camera.uiComponents.pages.ImageCapturingPage;
 import pages.camera.uiComponents.uiInterfaces.ActivityPage;
 
@@ -85,6 +88,7 @@ public class ButtonGroupPanel extends JPanel implements MouseListener, MouseMoti
             @Override
             public void actionPerformed(Button btn) {
                 centerBtn.listener.actionPerformed(centerBtn);
+                importingcircle2d.ImportingCircle2d.getInstance().showPage(AskPage.getInstance());
             }
         });
         buttons[2]=new Button("تصاویر",getWidth()/2,getHeight()/2,buttonsRR,new actionListener() {
@@ -98,12 +102,14 @@ public class ButtonGroupPanel extends JPanel implements MouseListener, MouseMoti
             @Override
             public void actionPerformed(Button btn) {
                 centerBtn.listener.actionPerformed(centerBtn);
+                importingcircle2d.ImportingCircle2d.getInstance().showPage(SmartCamera.getInstance());
             }
         });
         buttons[4]=new Button("فیلم",getWidth()/2,getHeight()/2,buttonsRR,new actionListener() {
             @Override
             public void actionPerformed(Button btn) {
                 centerBtn.listener.actionPerformed(centerBtn);
+                importingcircle2d.ImportingCircle2d.getInstance().showPage(VideoPage.getInstance());
             }
         });
         buttons[5]=new Button("کاتالوگ",getWidth()/2,getHeight()/2,buttonsRR,new actionListener() {

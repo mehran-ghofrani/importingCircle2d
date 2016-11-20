@@ -22,7 +22,9 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import pages.AskPage;
 import pages.CatalogPage;
+import pages.SmartCamera;
 import pages.VideoPage;
 import pages.camera.uiComponents.KeyBoard;
 import pages.camera.uiComponents.TouchJTextField;
@@ -135,31 +137,39 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
     }
     public void initialize(){
         
-        NavPage.getInstance().setVisible(false);
-        layer.add(NavPage.getInstance(),Integer.valueOf(1));
+        
         
         
         
         layer.add(DoorPage.getInstance(),Integer.valueOf(0));
-        layer.add(VideoPage.getInstance(),Integer.valueOf(0));
-        showPage(VideoPage.getInstance());
-//        showPage(CatalogEmailSendingPage.getInstance());
-        
+        showPage(DoorPage.getInstance());
+
+        NavPage.getInstance().setVisible(false);
+        layer.add(NavPage.getInstance(),Integer.valueOf(1));
         
         DBManager.getMyInstance();
+        ImagePage.getInstance().initialize();
         
         BlankPage.getInstance().setVisible(false);
         ImagePage.getInstance().setVisible(false);
         CatalogPage.getInstance().setVisible(false);
+        SmartCamera.getInstance().setVisible(false);
+        VideoPage.getInstance().setVisible(false);
+        AskPage.getInstance().setVisible(false);
+        
         ImageCapturingPage.getInstance().setVisible(false);
         RetryPage.getInstance().setVisible(false);
         CatalogEmailSendingPage.getInstance().setVisible(false);
-                
+        
         layer.add(BlankPage.getInstance(),Integer.valueOf(0));
         layer.add(ImagePage.getInstance(),Integer.valueOf(0));
+        layer.add(CatalogPage.getInstance(),Integer.valueOf(0));
+        layer.add(SmartCamera.getInstance(),Integer.valueOf(0));
+        layer.add(VideoPage.getInstance(),Integer.valueOf(0));
+        layer.add(AskPage.getInstance(),Integer.valueOf(0));
         //init camera components...
         
-//        layer.add(ImageCapturingPage.getInstance(),Integer.valueOf(0));
+        layer.add(ImageCapturingPage.getInstance(),Integer.valueOf(0));
         layer.add(RetryPage.getInstance(),Integer.valueOf(0));
         layer.add(CatalogEmailSendingPage.getInstance(),Integer.valueOf(0));
         
@@ -169,7 +179,7 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
         
         
         
-        ImagePage.getInstance().initialize();
+        
 
         
         
