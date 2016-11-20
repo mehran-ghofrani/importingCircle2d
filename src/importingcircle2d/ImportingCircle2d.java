@@ -141,15 +141,22 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
         
         
         
-        layer.add(DoorPage.getInstance(),Integer.valueOf(0));
-        showPage(DoorPage.getInstance());
+        
 
         NavPage.getInstance().setVisible(false);
         layer.add(NavPage.getInstance(),Integer.valueOf(1));
         
-        DBManager.getMyInstance();
-        ImagePage.getInstance().initialize();
+        layer.add(DoorPage.getInstance(),Integer.valueOf(0));
+        showPage(DoorPage.getInstance());
         
+        
+        
+        
+        
+        
+        ImageCapturingPage.getInstance().setVisible(false);
+        RetryPage.getInstance().setVisible(false);
+        CatalogEmailSendingPage.getInstance().setVisible(false);
         BlankPage.getInstance().setVisible(false);
         ImagePage.getInstance().setVisible(false);
         CatalogPage.getInstance().setVisible(false);
@@ -157,9 +164,6 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
         VideoPage.getInstance().setVisible(false);
         AskPage.getInstance().setVisible(false);
         
-        ImageCapturingPage.getInstance().setVisible(false);
-        RetryPage.getInstance().setVisible(false);
-        CatalogEmailSendingPage.getInstance().setVisible(false);
         
         layer.add(BlankPage.getInstance(),Integer.valueOf(0));
         layer.add(ImagePage.getInstance(),Integer.valueOf(0));
@@ -181,7 +185,9 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
         
         
 
+        DBManager.getMyInstance();
         
+        ImagePage.getInstance().initialize();
         
 
 

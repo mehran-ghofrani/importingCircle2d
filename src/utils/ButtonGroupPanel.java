@@ -5,7 +5,7 @@
  */
 package utils;
 
-import com.sun.org.apache.xml.internal.resolver.Catalog;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -89,6 +89,7 @@ public class ButtonGroupPanel extends JPanel implements MouseListener, MouseMoti
             public void actionPerformed(Button btn) {
                 centerBtn.listener.actionPerformed(centerBtn);
                 importingcircle2d.ImportingCircle2d.getInstance().showPage(AskPage.getInstance());
+                
             }
         });
         buttons[2]=new Button("تصاویر",getWidth()/2,getHeight()/2,buttonsRR,new actionListener() {

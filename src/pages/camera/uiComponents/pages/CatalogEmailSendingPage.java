@@ -41,6 +41,7 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
     private Image frameImage;
     private Image logoImage;
     private JLabel imagePanel;
+    private JLabel topBlankLableInLayout;
     
     utils.Polygon submitBtnCircle;
     public boolean submitBtnClicked;
@@ -114,7 +115,10 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
 
         
 
-        c.ipady = 1;
+        topBlankLableInLayout=new JLabel();
+        
+        
+        c.ipady = 20;
         c.insets = new Insets(10, 0, 0, 0);
         c.weighty = 0;
         c.weightx = 0;
@@ -125,10 +129,10 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
         
         
         
-        add(new JLabel(), c);
+        add(topBlankLableInLayout, c);
         
         c.ipady = 1;
-        c.insets = new Insets(10, 0, 0, 0);
+        c.insets = new Insets(10, 0, 10, 0);
         c.weighty = 0;
         c.weightx = 0;
         c.gridx = 0;
@@ -158,10 +162,10 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
         infoLable.setFont(headingFont);
         add(infoLable, c);
 
-        c.insets = new Insets(10, 0, 0, 20);
+        c.insets = new Insets(0, 0, 0, 20);
         c.ipadx = 0;
         c.gridx = 1;
-        c.gridy = i;
+        c.gridy = i++;
         c.gridwidth = 1;
         c.fill = GridBagConstraints.LINE_END;
         emailLabel = new JLabel("ایمیل:");
@@ -171,7 +175,7 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
         c.ipadx = 200;
         c.gridx = 0;
         c.gridy = i++;
-        c.gridwidth = 1;
+        c.gridwidth = 5;
         c.fill = GridBagConstraints.HORIZONTAL;
         emailInputField = new TouchJTextField("", "example@host.com", importingcircle2d.ImportingCircle2d.getInstance());
         emailInputField.setColumns(45);
@@ -419,6 +423,7 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
                     new File("image.jpg").delete();
                 }
             }).start();
+            importingcircle2d.ImportingCircle2d.getInstance().hideKeyBoard();
             statusLabel.setFont(headingFont.deriveFont(22.0f));
             String text = "عکس به آدرس " + tempEmail + " <font color='green'>ارسال شد</font> <br> عکس شما از روی سرور مرکزی پاک شد";
             statusLabel.setText("<html><div style='text-align: center;'>" + text + "</div></html>");
@@ -485,12 +490,13 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
     @Override
     public void afterDispose()
     {
-
+        
     }
 
     @Override
     public void beforeKeyboardShow() {
         if(imagePanel != null) remove(imagePanel);
+        addMaximizedBlankLabel();
         invalidate();
         updateUI();
         repaint();
@@ -499,6 +505,9 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
     @Override
     public void afterKeyboardDispose() {
         if(imagePanel != null) addImagePanel();
+        addMinimizedBlankLabel();
+
+        
         invalidate();
         updateUI();
         repaint();
@@ -524,7 +533,7 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
     private void addImagePanel() {
         GridBagConstraints c = new GridBagConstraints();
         c.ipady = 20;
-        c.insets = new Insets(10, 0, 30, 0);
+        c.insets = new Insets(0, 0, 0, 0);
         c.weighty = 0;
         c.weightx = 0;
         c.gridx = 0;
@@ -532,6 +541,47 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
         c.gridwidth = 2;
         c.fill = GridBagConstraints.NONE;
         add(imagePanel, c);
+    }
+    private void addMaximizedBlankLabel(){
+        
+        GridBagConstraints c = new GridBagConstraints();
+        
+        remove(topBlankLableInLayout);
+        
+        
+        
+        c.ipady = 20;
+        c.insets = new Insets(220, 0, 220, 0);
+        c.weighty = 0;
+        c.weightx = 0;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 2;
+        c.fill = GridBagConstraints.NONE;
+        
+        
+        
+        add(topBlankLableInLayout, c);
+    }
+    
+    private void addMinimizedBlankLabel(){
+        
+        GridBagConstraints c = new GridBagConstraints();
+        
+        remove(topBlankLableInLayout);
+        
+        c.ipady = 20;
+        c.insets = new Insets(10, 0, 0, 0);
+        c.weighty = 0;
+        c.weightx = 0;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 2;
+        c.fill = GridBagConstraints.NONE;
+        
+        
+        
+        add(topBlankLableInLayout, c);
     }
 }
 

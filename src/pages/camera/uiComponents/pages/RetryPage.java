@@ -76,7 +76,7 @@ public class RetryPage extends JPanel implements ActivityPage
             c.weighty = 0.0;
             c.weightx = 1.0;
             c.gridx = 0;
-            c.gridy = 0;
+            c.gridy = 1;
             c.gridwidth = 2;
             c.anchor = GridBagConstraints.CENTER;
             c.fill = GridBagConstraints.NONE;
@@ -102,13 +102,32 @@ public class RetryPage extends JPanel implements ActivityPage
         c.weighty = 0.0;
         c.weightx = 1.0;
         c.gridx = 0;
-        c.gridy = 1;
+        c.gridy = 0;
         c.gridwidth = 2;
         c.anchor = GridBagConstraints.CENTER;
         c.fill = GridBagConstraints.NONE;
 
 
-        String infoMsg = "<html><font color='green' size=16>آیا عکس مورد تایید می باشد؟</font></html>";
+        String infoMsg = "<html><font color='green' size=16>محل تبلیغات شما</font></html>";
+        infoLable = new JLabel(infoMsg);
+        infoLable.setFont(headingFont.deriveFont(Font.BOLD));
+        c.anchor=c.PAGE_END;
+        add(infoLable, c);
+
+        
+        
+        c.ipady = 20;
+        c.insets = new Insets(10, 0, 30, 0);
+        c.weighty = 0.0;
+        c.weightx = 1.0;
+        c.gridx = 0;
+        c.gridy = 2;
+        c.gridwidth = 2;
+        c.anchor = GridBagConstraints.CENTER;
+        c.fill = GridBagConstraints.NONE;
+
+
+        infoMsg = "<html><font color='green' size=16>آیا عکس مورد تایید می باشد؟</font></html>";
         infoLable = new JLabel(infoMsg);
         infoLable.setFont(headingFont.deriveFont(Font.BOLD));
         c.anchor=c.PAGE_END;
@@ -125,7 +144,7 @@ public class RetryPage extends JPanel implements ActivityPage
         c.ipadx = 0;
         c.ipady = 0;
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy = 3;
         c.gridwidth = 1;
         c.anchor = GridBagConstraints.FIRST_LINE_END;
         c.fill = GridBagConstraints.NONE;
@@ -144,7 +163,7 @@ public class RetryPage extends JPanel implements ActivityPage
         c.ipadx = 0;
         c.ipady = 0;
         c.gridx = 1;
-        c.gridy = 2;
+        c.gridy = 3;
         c.gridwidth = 1;
 
         c.anchor = GridBagConstraints.FIRST_LINE_START;

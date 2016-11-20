@@ -340,6 +340,7 @@ public class ImageCapturingPage extends JPanel implements ActivityPage
                     e.printStackTrace();
                 }
                 importingcircle2d.ImportingCircle2d.getInstance().showPage(RetryPage.getInstance());
+//                NavPage.getInstance().setVisible(true);
             }
         });
 
