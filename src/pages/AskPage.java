@@ -42,7 +42,7 @@ public class AskPage extends JPanel {
         setBackground(Color.WHITE);
         
         try {
-            image = ImageIO.read(new File("res//img//ask.jpg"));
+            image = ImageIO.read(new File("res\\img\\AskPage\\mallDeskInfo\\new\\ask.png"));
         } 
         catch (IOException ex) {
             ex.printStackTrace();

@@ -13,6 +13,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 import pages.AskPage;
 import pages.CatalogPage;
@@ -167,10 +169,14 @@ public class ButtonGroupPanel extends JPanel implements MouseListener, MouseMoti
                 int n=0;
                 while(buttons[0].moving||buttons[1].moving||buttons[2].moving||
                         buttons[3].moving||buttons[4].moving||buttons[5].moving){
-                    System.out.println("waiting to complete close"+n);
                     n++;
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(ButtonGroupPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
-                System.out.println("completed close");
+                System.out.println("completed close"+n);
                 for(int i=0;i<=5;i++){
                     buttons[i].setVisible(false);
                     
@@ -197,10 +203,14 @@ public class ButtonGroupPanel extends JPanel implements MouseListener, MouseMoti
                 int n=0;
                 while(buttons[0].moving||buttons[1].moving||buttons[2].moving||
                         buttons[3].moving||buttons[4].moving||buttons[5].moving){
-                    System.out.println("waiting to complete open"+n);
                     n++;
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(ButtonGroupPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
-                System.out.println("completed open");
+                System.out.println("completed open"+n);
                 
                 
                 ButtonGroupPanel.this.moving=false;

@@ -42,11 +42,11 @@ public class SmartCamera extends JPanel {
         setBackground(Color.WHITE);
         
         try {
-            image = ImageIO.read(new File("res//img//working.jpg"));
+            image = ImageIO.read(new File("res\\img\\General\\working.jpg"));
         } 
         catch (IOException ex) {
             ex.printStackTrace();
-            System.out.println("img//working.jpg");
+            System.out.println("res\\img\\General\\working.jpg");
         }        
         scratchImg();
         
