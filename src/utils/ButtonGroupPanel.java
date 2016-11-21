@@ -34,6 +34,7 @@ public class ButtonGroupPanel extends JPanel implements MouseListener, MouseMoti
     private Button centerBtn;
     private boolean closed;
     private double buttonsRR;
+    boolean anyButtonPressed;
 
     public ButtonGroupPanel(int width) {
         closed=true;
@@ -227,7 +228,8 @@ public class ButtonGroupPanel extends JPanel implements MouseListener, MouseMoti
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
+        if(!anyButtonPressed)
+            importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
         centerBtn.mouseClicked(e);
         for(int i=0;i<=5;i++){
             buttons[i].mouseClicked(e);
@@ -237,32 +239,52 @@ public class ButtonGroupPanel extends JPanel implements MouseListener, MouseMoti
 
     @Override
     public void mousePressed(MouseEvent e) {
-        importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
+        
+        centerBtn.mousePressed(e);
+        if(centerBtn.pressed)
+            anyButtonPressed=true;
+        for(int i=0;i<=5;i++){
+            buttons[i].mousePressed(e);
+            if(buttons[i].pressed)
+                anyButtonPressed=true;
+        }
+        if(!anyButtonPressed)
+            importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
+        centerBtn.mouseReleased(e);
+        for(int i=0;i<=5;i++){
+            buttons[i].mouseReleased(e);
+        }
+        anyButtonPressed=false;
+        if(!anyButtonPressed)
+            importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
+        if(!anyButtonPressed)
+            importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
+        if(!anyButtonPressed)
+            importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
+        if(!anyButtonPressed)
+            importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
+        if(!anyButtonPressed)
+            importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
         centerBtn.mouseMoved(e);
         for(int i=0;i<=5;i++){
             buttons[i].mouseMoved(e);
