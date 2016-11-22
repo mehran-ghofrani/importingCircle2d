@@ -47,6 +47,7 @@ public class NavPage extends JPanel implements MouseListener,MouseMotionListener
             instance=new NavPage();
         return instance;
     }
+    
     private NavPage(){
         addMouseListener(this);
         addMouseMotionListener(this);
@@ -176,8 +177,8 @@ public class NavPage extends JPanel implements MouseListener,MouseMotionListener
     public void mousePressed(MouseEvent e) {
         homeBtn.mousePressed(e);
         repaint();
-        
-        importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
+        if(!homeBtn.pressed)
+            importingcircle2d.ImportingCircle2d.getInstance().currentPage.dispatchEvent(e);
     }
 
     @Override

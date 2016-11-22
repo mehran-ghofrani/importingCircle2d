@@ -497,6 +497,7 @@ public class CatalogEmailSendingPage extends JPanel implements EnterActionPerfor
     public void beforeKeyboardShow() {
         if(imagePanel != null) remove(imagePanel);
         addMaximizedBlankLabel();
+        statusLabel.setText("");
         invalidate();
         updateUI();
         repaint();

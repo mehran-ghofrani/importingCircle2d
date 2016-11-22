@@ -21,9 +21,10 @@ import java.util.Vector;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import pages.camera.uiComponents.uiInterfaces.ActivityPage;
 import sun.security.jca.GetInstance;
 
-public class ImagePage extends JPanel implements MouseListener,MouseMotionListener{
+public class ImagePage extends JPanel implements MouseListener,MouseMotionListener, ActivityPage{
     
     private Vector<ImageItem> imgs;
     private static ImagePage instance;
@@ -75,14 +76,7 @@ public class ImagePage extends JPanel implements MouseListener,MouseMotionListen
         }
         revalidate();
     }
-    public void reinitialize(){
-        int i=0;
-        for(ImageItem imgItm:imgs){
-            imgs.get(i).setLocation(i*width, 0);
-            imgItm.setSize(importingcircle2d.ImportingCircle2d.getInstance().width, importingcircle2d.ImportingCircle2d.getInstance().height);
-            i++;
-        }
-    }
+    
     public void moveImages(final boolean right){
 
         final int[] currentLocation=new int[imgs.size()];
@@ -105,15 +99,8 @@ public class ImagePage extends JPanel implements MouseListener,MouseMotionListen
                             if(-1<i&&i<imgs.size())
                                 imgs.get(i).setLocation((int)((i-currentPic)*width+stepsLenght*j), 0);
                         }
-
-                        
-                        SwingUtilities.invokeLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                ImagePage.this.repaint();
-//                                ImagePage.this.paintComponents(ImagePage.this.getGraphics());
-                            }
-                        });
+                        ImagePage.this.repaint();
+//                                
                     }
                     currentPic+=right?-1:+1;
                     ImagePage.moving=false;
@@ -155,6 +142,42 @@ public class ImagePage extends JPanel implements MouseListener,MouseMotionListen
     @Override
     public void mouseMoved(MouseEvent e) {
         imgs.get(currentPic).dispatchEvent(e);
+    }
+
+    @Override
+    public int getPanelIndex() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void beforeShow() {
+        currentPic=0;
+        int i=0;
+        for(ImageItem imgItm:imgs){
+            imgs.get(i).setLocation(i*width, 0);
+            i++;
+        }
+    }
+
+    @Override
+    public void afterShow() {
+        
+    }
+
+    @Override
+    public void beforeDispose() {
+    }
+
+    @Override
+    public void afterDispose() {
+    }
+
+    @Override
+    public void beforeKeyboardShow() {
+    }
+
+    @Override
+    public void afterKeyboardDispose() {
     }
 }
 class ImageItem extends JPanel implements MouseListener{
@@ -217,6 +240,8 @@ class ImageItem extends JPanel implements MouseListener{
         int hortizalMove=Math.abs(e.getY()-lastY);
         if(verticalMove>hortizalMove&&verticalMove>getWidth()/5)
             ((ImagePage)getParent()).moveImages(e.getX()>lastX);
+        lastX=e.getX();
+        lastY=e.getY();
     }
     @Override
     public void mouseEntered(MouseEvent e) {

@@ -35,19 +35,15 @@ import javafx.scene.layout.*;
 import javafx.scene.media.*;
 import javafx.util.Duration;
 import javax.swing.*;
+import pages.camera.uiComponents.uiInterfaces.ActivityPage;
 /**
  *
  * @author mgh
  */
-public class VideoPage extends JPanel{
+public class VideoPage extends JPanel implements ActivityPage{
     
+    public static SceneGenerator sceneGen;
     public static VideoPage instance;
-    URL source;
-    Component playerView;
-    
-    private File vlcInstallPath = new File("D:/vlc");
-    
-    
     
     public static VideoPage getInstance(){
         if(instance==null)
@@ -55,46 +51,77 @@ public class VideoPage extends JPanel{
         return instance;
     }
 
-    public VideoPage() {
-        
+    public VideoPage() { 
         setLayout(null);
         setSize(importingcircle2d.ImportingCircle2d.getInstance().getSize());
         initAndShowGUI();
-        
-
     }
-    
-    
     private void initAndShowGUI() {
     // This method is invoked on Swing thread
     final JFXPanel fxPanel = new JFXPanel();
     fxPanel.setSize(getSize());
     add(fxPanel);
-        setBackground(Color.red);
-        fxPanel.setBackground(Color.yellow);
-    
-    
-
-    Platform.runLater(new Runnable() {
-      @Override public void run() {
-        initFX(fxPanel);        
-      }
-    });
+    initFX(fxPanel);
   }
 
   private static void initFX(JFXPanel fxPanel) {
     // This method is invoked on JavaFX thread
-    Scene scene = new SceneGenerator().createScene();
-    fxPanel.setScene(scene);
+    sceneGen=new SceneGenerator();
+    fxPanel.setScene(sceneGen.createScene());
   }
+
+    @Override
+    public int getPanelIndex() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void beforeShow() {
+        sceneGen.startFirst();
+    }
+    @Override
+    public void afterShow() {
+        
+    }
+
+    @Override
+    public void beforeDispose() {
+    }
+
+    @Override
+    public void afterDispose() {
+    }
+
+    @Override
+    public void beforeKeyboardShow() {
+    }
+
+    @Override
+    public void afterKeyboardDispose() {
+    }
 
   
 }
 
-class SceneGenerator {    
+
+
+
+
+
+
+
+
+
+
+
+
+class SceneGenerator {
+    
   final Label currentlyPlaying = new Label();
   final ProgressBar progress = new ProgressBar();
   private ChangeListener<Duration> progressChangeListener;
+  MediaView mediaView;
+  List<MediaPlayer> players;
 
   public Scene createScene() {
     final StackPane layout = new StackPane();
@@ -108,7 +135,7 @@ class SceneGenerator {
     }
 
     // create some media players.
-    final List<MediaPlayer> players = new ArrayList<MediaPlayer>();
+    players = new ArrayList<MediaPlayer>();
     for (String file : dir.list(new FilenameFilter() {
       @Override public boolean accept(File dir, String name) {
         return name.endsWith(".mp4");
@@ -121,7 +148,7 @@ class SceneGenerator {
     }    
 
     // create a view to show the mediaplayers.
-    final MediaView mediaView = new MediaView(players.get(0));
+    mediaView = new MediaView(players.get(0));
     final Button skip = new Button("Skip");
     final Button play = new Button("Pause");
 
@@ -181,7 +208,7 @@ class SceneGenerator {
     play.prefHeightProperty().bind(invisiblePause.heightProperty());
     play.prefWidthProperty().bind(invisiblePause.widthProperty());
 
-    // layout the scene.
+    // layout the sceneGen.
     layout.setStyle("-fx-background-color: cornsilk; -fx-font-size: 20; -fx-padding: 20; -fx-alignment: center;");
     layout.getChildren().addAll(
       invisiblePause,
@@ -222,5 +249,21 @@ class SceneGenerator {
       }
     });
     return player;
-}
+  }
+  public void startFirst(){
+    final MediaPlayer curPlayer = mediaView.getMediaPlayer();
+    mediaView.setMediaPlayer(players.get(0));
+//    curPlayer.currentTimeProperty().removeListener(progressChangeListener);
+    curPlayer.stop();
+    mediaView.getMediaPlayer().play();
+    
+    setCurrentlyPlaying(players.get(0));
+
+//        final MediaPlayer curPlayer = mediaView.getMediaPlayer();
+//        MediaPlayer nextPlayer = players.get((players.indexOf(curPlayer) + 1) % players.size());
+//        mediaView.setMediaPlayer(nextPlayer);
+//        curPlayer.currentTimeProperty().removeListener(progressChangeListener);
+//        curPlayer.stop();
+//        nextPlayer.play();
+  }
 }
