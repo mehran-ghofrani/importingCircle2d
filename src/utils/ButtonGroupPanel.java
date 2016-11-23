@@ -121,6 +121,7 @@ public class ButtonGroupPanel extends JPanel implements MouseListener, MouseMoti
             public void actionPerformed(Button btn) {
                 centerBtn.listener.actionPerformed(centerBtn);
                 importingcircle2d.ImportingCircle2d.getInstance().showPage(CatalogPage.getInstance());
+//                NavPage.getInstance().setVisible(false);
             }
         });
         

@@ -9,7 +9,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javax.swing.JPanel;
 import org.opencv.video.Video;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -20,8 +19,6 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
-
-
 import java.io.*;
 import java.util.*;
 import javafx.application.Platform;
@@ -44,17 +41,21 @@ public class VideoPage extends JPanel implements ActivityPage{
     
     public static SceneGenerator sceneGen;
     public static VideoPage instance;
+    public static boolean firstShow=true;
     
     public static VideoPage getInstance(){
         if(instance==null)
             instance=new VideoPage();
         return instance;
     }
-
-    public VideoPage() { 
+    public VideoPage() {
         setLayout(null);
         setSize(importingcircle2d.ImportingCircle2d.getInstance().getSize());
         initAndShowGUI();
+
+
+
+
     }
     private void initAndShowGUI() {
     // This method is invoked on Swing thread
@@ -63,22 +64,26 @@ public class VideoPage extends JPanel implements ActivityPage{
     add(fxPanel);
     initFX(fxPanel);
   }
-
   private static void initFX(JFXPanel fxPanel) {
     // This method is invoked on JavaFX thread
     sceneGen=new SceneGenerator();
     fxPanel.setScene(sceneGen.createScene());
   }
-
+  
     @Override
     public int getPanelIndex() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public void beforeShow() {
-        sceneGen.startFirst();
+        if(firstShow)
+            firstShow=false;
+        else
+            sceneGen.startFirst();
+            
     }
+    
     @Override
     public void afterShow() {
         
@@ -115,6 +120,42 @@ public class VideoPage extends JPanel implements ActivityPage{
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class SceneGenerator {
     
   final Label currentlyPlaying = new Label();
@@ -124,6 +165,9 @@ class SceneGenerator {
   List<MediaPlayer> players;
 
   public Scene createScene() {
+      
+      
+      
     final StackPane layout = new StackPane();
 
     // determine the source directory for the playlist
@@ -251,13 +295,28 @@ class SceneGenerator {
     return player;
   }
   public void startFirst(){
-    final MediaPlayer curPlayer = mediaView.getMediaPlayer();
-    mediaView.setMediaPlayer(players.get(0));
-//    curPlayer.currentTimeProperty().removeListener(progressChangeListener);
-    curPlayer.stop();
-    mediaView.getMediaPlayer().play();
+      if(mediaView.getMediaPlayer()!=null){
+//        final MediaPlayer curPlayer = mediaView.getMediaPlayer();
+//        mediaView.setMediaPlayer(players.get(0));
+////        curPlayer.currentTimeProperty().removeListener(progressChangeListener);
+//        curPlayer.stop();
+//        mediaView.getMediaPlayer().play();
+        
+
+
+        final MediaPlayer curPlayer = mediaView.getMediaPlayer();
+        MediaPlayer nextPlayer = players.get(0);
+        mediaView.setMediaPlayer(nextPlayer);
+        curPlayer.currentTimeProperty().removeListener(progressChangeListener);
+        curPlayer.stop();
+        nextPlayer.play();
+        curPlayer.currentTimeProperty().removeListener(progressChangeListener);
+        setCurrentlyPlaying(players.get(0));
+
+      }
+
+        
     
-    setCurrentlyPlaying(players.get(0));
 
 //        final MediaPlayer curPlayer = mediaView.getMediaPlayer();
 //        MediaPlayer nextPlayer = players.get((players.indexOf(curPlayer) + 1) % players.size());
