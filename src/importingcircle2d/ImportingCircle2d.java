@@ -40,6 +40,8 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
 
     public int height;
     public int width;
+    public boolean horizontal; 
+    public int biggerLenght;
     private static ImportingCircle2d instance;
     public JPanel currentPage;
     public JLayeredPane layer;
@@ -63,6 +65,8 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         width = (int)screenSize.getWidth();
         height = (int)screenSize.getHeight();
+        horizontal=width>height;
+        biggerLenght=Math.max(width, height);
         setSize(width, height);
         setLocationRelativeTo(null);
         setUndecorated(true);
@@ -142,10 +146,10 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
         
         
         
-        layer.add(CatalogPage.getInstance(),Integer.valueOf(0));
-        showPage(CatalogPage.getInstance());
+        layer.add(AskPage.getInstance(),Integer.valueOf(0));
+        showPage(AskPage.getInstance());
         
-//        NavPage.getInstance().setVisible(false);
+        NavPage.getInstance().setVisible(false);
         layer.add(NavPage.getInstance(),Integer.valueOf(1));
         
         
@@ -159,18 +163,18 @@ public class ImportingCircle2d extends JFrame implements MouseListener,MouseMoti
         CatalogEmailSendingPage.getInstance().setVisible(false);
         BlankPage.getInstance().setVisible(false);
         ImagePage.getInstance().setVisible(false);
-//        CatalogPage.getInstance().setVisible(false);
+        CatalogPage.getInstance().setVisible(false);
         SmartCamera.getInstance().setVisible(false);
         VideoPage.getInstance().setVisible(false);
-        AskPage.getInstance().setVisible(false);
+//        AskPage.getInstance().setVisible(false);
         
         
         layer.add(BlankPage.getInstance(),Integer.valueOf(0));
         layer.add(ImagePage.getInstance(),Integer.valueOf(0));
-//        layer.add(CatalogPage.getInstance(),Integer.valueOf(0));
+        layer.add(CatalogPage.getInstance(),Integer.valueOf(0));
         layer.add(SmartCamera.getInstance(),Integer.valueOf(0));
         layer.add(VideoPage.getInstance(),Integer.valueOf(0));
-        layer.add(AskPage.getInstance(),Integer.valueOf(0));
+//        layer.add(AskPage.getInstance(),Integer.valueOf(0));
         //init camera components...
         
         layer.add(ImageCapturingPage.getInstance(),Integer.valueOf(0));
